@@ -17,9 +17,7 @@ Este repositorio no es una carpeta de slides. Es el punto de partida para que un
   <img src="assets/promocion/publicidad-curso-ia-gcms.jpeg" alt="Publicidad del curso IA en la investigacion cromatografica" width="420">
 </p>
 
-**Presentacion:** abre `output/presentations/index.html` localmente despues de clonar el repositorio.
-
-> La version online en GitHub Pages se activara cuando el repositorio sea publico.
+**Abrir la presentacion:** [davinson-pezo.github.io/curso-ia-gcms](https://davinson-pezo.github.io/curso-ia-gcms/)
 
 ---
 
@@ -50,7 +48,7 @@ Sus imagenes estan versionadas en:
 
 | Recurso | Ruta |
 | :--- | :--- |
-| Presentacion local | Clonar el repo y abrir `output/presentations/index.html` en el navegador. |
+| Presentacion online | [davinson-pezo.github.io/curso-ia-gcms](https://davinson-pezo.github.io/curso-ia-gcms/) |
 | Codigo HTML de la presentacion | [output/presentations/index.html](output/presentations/index.html) |
 | Recursos externos obligatorios | [recursos.md](recursos.md) |
 | Guion para alumnos | [guion-alumnos/](guion-alumnos/) |
