@@ -13,7 +13,11 @@ Este repositorio no es una carpeta de slides. Es el punto de partida para que un
 
 > Objetivo del curso: entender como convertir datos HS-SPME-GC-MS en un analisis defendible, con ayuda de IA, sin perder criterio quimico ni trazabilidad.
 
-![Portada del curso](images/00_portada_gcms_ia.png)
+<p align="center">
+  <img src="assets/promocion/publicidad-curso-ia-gcms.jpeg" alt="Publicidad del curso IA en la investigacion cromatografica" width="420">
+</p>
+
+**Abrir la presentacion:** [davinson-pezo.github.io/curso-ia-gcms](https://davinson-pezo.github.io/curso-ia-gcms/)
 
 ---
 
@@ -44,10 +48,12 @@ Sus imagenes estan versionadas en:
 
 | Recurso | Ruta |
 | :--- | :--- |
-| Presentacion HTML | [output/presentations/index.html](output/presentations/index.html) |
+| Presentacion online | [davinson-pezo.github.io/curso-ia-gcms](https://davinson-pezo.github.io/curso-ia-gcms/) |
+| Codigo HTML de la presentacion | [output/presentations/index.html](output/presentations/index.html) |
 | Recursos externos obligatorios | [recursos.md](recursos.md) |
 | Guion para alumnos | [guion-alumnos/](guion-alumnos/) |
 | Notas del orador | [markdown/notas_orador.md](markdown/notas_orador.md) |
+| Material promocional | [assets/promocion/](assets/promocion/) |
 | Prompts y plantillas | [recursos/](recursos/) |
 | Scripts reproducibles | [scripts/](scripts/) |
 | Roadmap de reconstruccion | [docs/roadmap-reconstruccion.md](docs/roadmap-reconstruccion.md) |
@@ -90,7 +96,7 @@ Generar datos sinteticos para practicar sin datos reales:
 python scripts/generar_datos_sinteticos.py
 ```
 
-Abrir la presentacion:
+Abrir la presentacion localmente:
 
 ```bash
 open output/presentations/index.html
@@ -149,6 +155,7 @@ curso-ia-gcms/
 ├── recursos.md
 ├── requirements.txt
 ├── output/presentations/              Presentacion HTML del curso
+├── assets/promocion/                  Imagenes para difusion del curso
 ├── guion-alumnos/                     Guias paso a paso para alumnos
 ├── recursos/                          Prompts, lecturas y datos sinteticos
 ├── scripts/                           Codigo reproducible
@@ -189,4 +196,3 @@ El `.gitignore` excluye entornos virtuales, caches, `.DS_Store`, datos crudos y 
 
 - Documentacion, presentaciones, imagenes y material docente: [CC BY-NC 4.0](LICENSE)
 - Codigo, notebooks y configuracion tecnica: [MIT](LICENSE-MIT.md)
-
