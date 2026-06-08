@@ -615,8 +615,10 @@ code {
 <div class="slide-counter" id="slideCounter">1 / 64</div>
 
 <div class="nav-controls">
-  <button class="nav-btn" onclick="prevSlide()">‹</button>
-  <button class="nav-btn" onclick="nextSlide()">›</button>
+  <button class="nav-btn" onclick="firstSlide()" aria-label="Ir al inicio" title="Ir al inicio">‹‹</button>
+  <button class="nav-btn" onclick="prevSlide()" aria-label="Slide anterior" title="Slide anterior">‹</button>
+  <button class="nav-btn" onclick="nextSlide()" aria-label="Siguiente slide" title="Siguiente slide">›</button>
+  <button class="nav-btn" onclick="lastSlide()" aria-label="Ir al final" title="Ir al final">››</button>
 </div>
 
 <!-- ============================================ -->
@@ -4128,6 +4130,8 @@ function showSlide(n) {
 
 function nextSlide() { showSlide(currentSlide + 1); }
 function prevSlide() { showSlide(currentSlide - 1); }
+function firstSlide() { showSlide(1); }
+function lastSlide() { showSlide(totalSlides); }
 
 document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); nextSlide(); }
