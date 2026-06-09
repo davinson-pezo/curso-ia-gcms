@@ -432,7 +432,7 @@ The 10 features identified with VIP > 1.5 represent promising biomarker candidat
 Dr. Davinson Pezo, PhD - Scientific Consultant  
 Dra. Magdalena Wrona - Co-Author  
 Jülich, Germany | ORCID: 0000-0001-8978-9498  
-Email: davinson@me.com | Web: www.dataquorum.wordpress.com
+Email: info@dataquorum.net | Web: https://dataquorum.net
 
 **Confidentiality Notice:** This report contains proprietary information intended solely for the use of the client. Distribution without written permission is prohibited.
 

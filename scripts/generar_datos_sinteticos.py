@@ -9,7 +9,7 @@ import random
 from pathlib import Path
 
 
-GROUPS = (("Good", 8), ("Bad", 8), ("Culture", 8))
+GROUPS = (("Good", 8), ("Bad", 7), ("Culture", 7))
 N_FEATURES = 213
 DEFAULT_OUTPUT = Path("recursos/datos-sinteticos/gcms_features_sinteticas.csv")
 

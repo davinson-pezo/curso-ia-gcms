@@ -14,7 +14,7 @@ gcms_features_sinteticas.csv
 
 ## Diseno del dataset
 
-- 24 muestras.
+- 22 muestras (8 Good, 7 Bad, 7 Culture).
 - 3 grupos: `Good`, `Bad`, `Culture`.
 - 213 features numericas.
 - Algunas features tienen senal diferencial simulada para que el ejercicio sea interpretable.

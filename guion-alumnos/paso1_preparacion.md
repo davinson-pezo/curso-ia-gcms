@@ -2,6 +2,8 @@
 
 Objetivo: dejar el repositorio listo para trabajar durante el curso.
 
+Antes de la practica larga, instala y verifica Antigravity con la [guia de instalacion de Antigravity](guia_instalacion_antigravity.md). Para este curso es necesario tener activado **Science Skills**.
+
 ## 1. Clonar el repositorio
 
 ```bash

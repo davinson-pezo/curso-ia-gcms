@@ -21,7 +21,6 @@ curso-ia-gcms/
 ├── index.html
 ├── output/presentations/
 │   ├── index.html
-│   ├── images/
 │   └── markdown/
 ├── images/
 ├── markdown/
@@ -41,6 +40,7 @@ curso-ia-gcms/
 - Prompts reutilizables: `nombre_descriptivo.md`.
 - Scripts: verbo + objeto, por ejemplo `generar_datos_sinteticos.py`.
 - Resultados: no versionar salvo ejemplos pequenos y anonimizados.
+- Imagenes de la presentacion: usar siempre la carpeta canonica `images/` en la raiz.
 
 ## Pendientes recomendados
 
@@ -48,4 +48,3 @@ curso-ia-gcms/
 - Decidir si `output/presentations/` sera el entregable final o si se generara desde una fuente editable.
 - Anadir notebooks de practica cuando el pipeline real este reconstruido.
 - Separar datos sinteticos pequenos versionados de datos generados por cada alumno.
-

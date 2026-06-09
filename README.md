@@ -3,7 +3,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
 [![Course](https://img.shields.io/badge/course-IA%20%2B%20GC--MS-592eff.svg)](#que-vas-a-construir)
 [![NotebookLM](https://img.shields.io/badge/RAG-NotebookLM-2ed6ff.svg)](recursos.md)
-[![Antigravity IDE](https://img.shields.io/badge/agent-Antigravity%20IDE-a2ea13.svg)](guion-alumnos/paso4_pipeline.md)
+[![Antigravity](https://img.shields.io/badge/agent-Antigravity%202.0%20%2B%20IDE%20%2B%20CLI-a2ea13.svg)](guion-alumnos/guia_instalacion_antigravity.md)
 [![Docs CC BY-NC 4.0](https://img.shields.io/badge/docs-CC%20BY--NC%204.0-lightgrey.svg)](LICENSE)
 [![Code MIT](https://img.shields.io/badge/code-MIT-green.svg)](LICENSE-MIT.md)
 
@@ -111,10 +111,12 @@ En Windows o Linux, abre `output/presentations/index.html` directamente en el na
 | Paso | Guia | Resultado |
 | :--- | :--- | :--- |
 | 1 | [Preparacion](guion-alumnos/paso1_preparacion.md) | Entorno y repo listos. |
-| 2 | [Scientific Prompt Stack](guion-alumnos/paso2_prompt_stack.md) | Prompt cientifico auditable. |
-| 3 | [NotebookLM](guion-alumnos/paso3_notebooklm.md) | Base RAG con referencias del curso. |
-| 4 | [Pipeline GC-MS](guion-alumnos/paso4_pipeline.md) | Analisis exploratorio y tabla de biomarcadores. |
-| 5 | [Informe reproducible](guion-alumnos/paso5_informe_reproducible.md) | Informe tecnico comparable al ejemplo DataQuorum. |
+| 2 | [Instalacion de Antigravity](guion-alumnos/guia_instalacion_antigravity.md) | Antigravity 2.0, IDE, CLI y Science Skills activos. |
+| 3 | [Scientific Prompt Stack](guion-alumnos/paso2_prompt_stack.md) | Prompt cientifico auditable. |
+| 4 | [Configuracion de NotebookLM](guion-alumnos/guia_configuracion_notebooklm.md) | Cuaderno RAG conectado a las referencias del curso. |
+| 5 | [NotebookLM](guion-alumnos/paso3_notebooklm.md) | Consultas controladas sobre la base RAG. |
+| 6 | [Pipeline GC-MS](guion-alumnos/paso4_pipeline.md) | Analisis exploratorio y tabla de biomarcadores. |
+| 7 | [Informe reproducible](guion-alumnos/paso5_informe_reproducible.md) | Informe tecnico comparable al ejemplo DataQuorum. |
 
 ---
 
@@ -185,8 +187,6 @@ El `.gitignore` excluye entornos virtuales, caches, `.DS_Store`, datos crudos y 
 
 ## Limitaciones Actuales
 
-- El proyecto esta en reconstruccion despues de perdida de material previo.
-- La presentacion existe y es navegable, pero algunas afirmaciones sobre herramientas actuales deben revisarse antes de impartir el curso.
 - El pipeline publico usa datos sinteticos; los cromatogramas reales se distribuyen por Drive.
 - El informe DataQuorum sirve como objetivo estructural, pero debe sanitizarse si el repositorio sera publico para alumnos.
 

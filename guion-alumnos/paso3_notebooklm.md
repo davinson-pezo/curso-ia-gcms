@@ -2,6 +2,8 @@
 
 Objetivo: usar NotebookLM como lector controlado de papers, no como buscador general.
 
+Antes de empezar, configura el cuaderno del curso con la [guia de configuracion de NotebookLM](guia_configuracion_notebooklm.md).
+
 ## Flujo
 
 1. Reune 3-5 papers relevantes.
@@ -28,4 +30,3 @@ Que afirmaciones puedo defender con estos papers y cuales serian especulativas?
 ## Regla de uso
 
 NotebookLM solo debe responder con base en las fuentes que has subido. Si falta una fuente, no conviertas la respuesta en conclusion final.
-

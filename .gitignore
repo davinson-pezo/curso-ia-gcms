@@ -20,5 +20,5 @@ recursos/datos-sinteticos/*.csv
 
 # Artefactos temporales de notebooks y herramientas.
 .ipynb_checkpoints/
+.playwright-cli/
 *.log
-

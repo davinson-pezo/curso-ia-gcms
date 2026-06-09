@@ -74,7 +74,7 @@
 
 (Por generar — placeholder de notas)
 
-- La regla: **2.0 para investigación, IDE para programar, CLI para batch** (el SDK existe pero no lo cubrimos en el curso).
+- La regla: **2.0 para investigación, IDE para programar, CLI para batch, SDK para custom**.
 - Cuando use el IDE: coding iterativo. Cuando use CLI: pipelines largos, batch, servidores.
 - Demo en vivo del CLI: `antigravity run "analyze embryo CDF data"`.
 
@@ -105,8 +105,8 @@
 (Por generar — placeholder)
 
 - "MCP es el USB-C de los LLMs."
-- Demo: instalar EcoLab RAG como MCP server.
-- Caso de uso real: ClayOMics, EcoLab RAG, Zotero.
+- Demo: conectar Filesystem MCP y una base bibliográfica externa.
+- Caso de uso real: datos GC-MS del curso, PubMed/Crossref y archivos locales.
 
 ---
 
@@ -132,21 +132,20 @@
   - Slide 3: HS-SPME-GC-MS como técnica
 
 - 9.4-9.7 Pipeline (20 min)
-  - Slide 4: Diagrama del pipeline
-  - Slide 5: ASLS baseline correction
-  - Slide 6: Peak detection
-  - Slide 7: Alignment + filtrado
+  - Slide 4: Diagrama del pipeline (6 etapas)
+  - Slide 5: ASLS baseline correction — menciona **p=0.001** (no p=0.01) y el filtro de media móvil previo
+  - Slide 6: Peak detection (1ª derivada)
+  - Slide 7: Alignment (ΔRT ≤ 0.5 min, r ≥ 0.85) + filtrado de **siloxanos m/z 73, 149, 207**
 
 - 9.8-9.11 EDA + Estadística (25 min)
-  - Slide 8: TIC overlay por grupos
-  - Slide 9: EIC m/z 49 — el hallazgo clave
-  - Slide 10: EIC m/z 84 — confirmación
-  - Slide 11: PLS-DA score plot
+  - Slide 8: PLS-DA score plot — **CV R² = −0.47 (negativo, modelo exploratorio)**. No ocultar esto. Los TIC overlays están en el informe (Figuras 1-3) pero no tienen slide propio — puedes mostrarlos desde el informe si alguien pregunta.
+  - Slide 10: VIP scores — top 3 son carbonilos (m/z 44, 43). **Rank 5: Longifolene** (sesquiterpeno, NIST quality 95) — hallazgo relevante.
+  - Slide 11: EIC m/z 49 y m/z 84 — validados por enriquecimiento selectivo en Good vs Culture, **no por VIP ranking** (no alcanzan top 10 con n=22). Aclarar esto explícitamente.
 
 - 9.12-9.14 Biomarcadores (15 min)
-  - Slide 12: VIP scores, top 10
-  - Slide 13: m/z 49 y 84 validados
-  - Slide 14: Identificación NIST tentativa
+  - Slide 12: Tabla top 10 VIP — m/z 44, 43, 44, 91, 161, 91, 281, 267, 135, 57
+  - Slide 13: m/z 49 y 84 confirmados por EIC (validación química, no estadística)
+  - Slide 14: Identificación NIST tentativa — umbral quality ≥ 50
 
 - 9.15-9.16 Conclusiones + honestidad (15 min)
   - Slide 15: 10 hallazgos, con caveat
@@ -166,7 +165,7 @@
 (Por generar — placeholder)
 
 - Estructura del pipeline de análisis (genérico).
-- Cómo buscar bibliografía: PubMed, Crossref, NotebookLM, EcoLab RAG.
+- Cómo buscar bibliografía: PubMed, Crossref, NotebookLM y bases bibliográficas externas.
 - IMRaD structure para el informe final.
 
 ---

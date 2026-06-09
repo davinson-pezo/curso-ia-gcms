@@ -50,7 +50,7 @@ Comprueba que los grupos Good, Bad y Culture estan representados.
 
 ## Que deberias obtener
 
-- Un dataset de 24 muestras.
+- Un dataset de 22 muestras (igual que el caso real del informe).
 - 213 features numericas.
 - Tres grupos: `Good`, `Bad`, `Culture`.
 - Una tabla top 10 generada en `resultados/`.

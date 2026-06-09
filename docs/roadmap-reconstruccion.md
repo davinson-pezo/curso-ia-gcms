@@ -36,7 +36,11 @@ Estado: completado como base inicial.
 
 ## Riesgos abiertos
 
-- La presentacion contiene afirmaciones sobre herramientas actuales que conviene fact-checkear antes de impartir el curso.
-- Las imagenes estan duplicadas en `images/` y `output/presentations/images/`; conviene decidir cual sera la fuente canonica.
+- La carpeta canonica de imagenes de la presentacion es `images/` en la raiz del repositorio.
 - El pipeline real no debe mezclarse con datos confidenciales del proyecto Milton.
 
+## Cambios recientes
+
+- Presentacion auditada y alineada con `informe_dataquorum_v3_final.md`: parametros ASLS, metricas PLS-DA, tabla VIP top 10 y validacion de m/z 49/84 corregidos.
+- Notas del orador y guion de alumnos revisados y consistentes con el informe.
+- Dataset sintetico regenerado a 22 muestras (8 Good, 7 Bad, 7 Culture).

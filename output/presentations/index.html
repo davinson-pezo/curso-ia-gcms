@@ -7,6 +7,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+(function setInitialDeckScale() {
+  const scale = Math.min(1, window.innerWidth / 1920, window.innerHeight / 1080);
+  document.documentElement.style.setProperty('--deck-scale', scale.toFixed(4));
+})();
+</script>
 <style>
 :root {
   --color-canvas-white: #ffffff;
@@ -25,14 +31,15 @@
   --font-headline: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
-  --letter-spacing: -0.02em;
-  --section-gap: 30px;
-  --card-padding: 40px;
+  --letter-spacing: 0;
+  --section-gap: 18px;
+  --card-padding: 24px;
   --element-gap: 5px;
   --radius-cards: 26px;
   --radius-badges: 200px;
   --radius-buttons: 12px;
-  --slide-padding: 80px 100px;
+  --slide-padding: 48px 76px;
+  --deck-scale: 1;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -52,24 +59,20 @@ html, body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: calc(100vw / var(--deck-scale));
+  height: calc(100vh / var(--deck-scale));
   padding: var(--slide-padding);
   display: none;
   background: var(--color-canvas-white);
   overflow-y: auto;
-  animation: fadeIn 0.5s ease;
+  transform: scale(var(--deck-scale));
+  transform-origin: top left;
 }
 
 .slide.active { display: flex; flex-direction: column; }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 .slide-header {
-  margin-bottom: 40px;
+  margin-bottom: 22px;
   flex-shrink: 0;
 }
 
@@ -77,7 +80,7 @@ html, body {
   display: inline-block;
   font-family: var(--font-headline);
   font-weight: 600;
-  font-size: 14px;
+  font-size: 15px;
   color: var(--color-action-violet);
   background: var(--color-air-blue);
   padding: 6px 16px;
@@ -89,7 +92,7 @@ html, body {
 .slide-title-text {
   font-family: var(--font-headline);
   font-weight: 700;
-  font-size: 42px;
+  font-size: 38px;
   color: var(--color-rich-violet);
   line-height: 1.15;
   letter-spacing: var(--letter-spacing);
@@ -100,18 +103,28 @@ html, body {
 
 .slide-title-text svg {
   flex-shrink: 0;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   stroke: var(--color-action-violet);
 }
 
 .slide-subtitle {
   font-family: var(--font-body);
-  font-size: 18px;
+  font-size: 17px;
   color: var(--color-slate-text);
   margin-top: 12px;
   opacity: 0.75;
   line-height: 1.5;
+}
+
+.slide h3 {
+  font-size: 22px;
+  line-height: 1.25;
+}
+
+.slide h4 {
+  font-size: 20px;
+  line-height: 1.25;
 }
 
 .slide-content {
@@ -126,10 +139,10 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 24px;
-  margin-top: 24px;
+  padding-top: 14px;
+  margin-top: auto;
   border-top: 1px solid var(--color-cloud-mist);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-slate-text);
   opacity: 0.6;
   flex-shrink: 0;
@@ -178,7 +191,7 @@ html, body {
   padding: 6px 16px;
   border-radius: var(--radius-badges);
   font-weight: 600;
-  font-size: 13px;
+  font-size: 14px;
   font-family: var(--font-body);
   letter-spacing: 0;
 }
@@ -190,23 +203,51 @@ html, body {
 .badge-info { background: var(--color-air-blue); color: var(--color-rich-violet); }
 .badge-warn { background: var(--color-lush-green); color: var(--color-rich-violet); }
 
+.alert {
+  background: var(--color-soft-gray-fill);
+  border-left: 6px solid var(--color-action-violet);
+  border-radius: var(--radius-buttons);
+  color: var(--color-rich-violet);
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 16px 20px;
+}
+
+.card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(89, 46, 255, 0.1);
+  color: var(--color-action-violet);
+  margin-bottom: 12px;
+}
+
 /* GRIDS */
 .grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 30px;
+  gap: 22px;
 }
 
 .grid-3 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 24px;
+  gap: 18px;
 }
 
 .grid-4 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 20px;
+  gap: 16px;
+}
+
+.three-col {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
 }
 
 /* TABLES */
@@ -216,21 +257,37 @@ table {
   font-size: 15px;
 }
 
+.table-readable {
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.table-readable th {
+  font-size: 16px;
+  padding: 12px 14px;
+}
+
+.table-readable td {
+  font-size: 16px;
+  padding: 11px 14px;
+}
+
 th {
   background: var(--color-rich-violet);
   color: white;
-  padding: 14px 16px;
+  padding: 10px 12px;
   text-align: left;
   font-family: var(--font-headline);
   font-weight: 600;
-  font-size: 14px;
+  font-size: 15px;
   letter-spacing: 0;
 }
 
 td {
-  padding: 14px 16px;
+  padding: 10px 12px;
   border-bottom: 1px solid var(--color-cloud-mist);
   color: var(--color-slate-text);
+  font-size: 15px;
 }
 
 tr:nth-child(even) td { background: var(--color-soft-gray-fill); }
@@ -275,7 +332,7 @@ tr:hover td { background: var(--color-air-blue); }
 }
 
 .image-caption {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--color-slate-text);
   opacity: 0.7;
   text-align: center;
@@ -286,7 +343,7 @@ tr:hover td { background: var(--color-air-blue); }
 /* NAVIGATION */
 .nav-controls {
   position: fixed;
-  bottom: 24px;
+  bottom: 96px;
   right: 24px;
   display: flex;
   gap: 8px;
@@ -329,7 +386,7 @@ tr:hover td { background: var(--color-air-blue); }
 
 .slide-counter {
   position: fixed;
-  bottom: 24px;
+  bottom: 96px;
   left: 24px;
   background: var(--color-rich-violet);
   color: white;
@@ -368,6 +425,8 @@ tr:hover td { background: var(--color-air-blue); }
 }
 
 .title-slide .slide-footer {
+  align-self: stretch;
+  width: 100%;
   color: rgba(255, 255, 255, 0.85) !important;
   border-top: 1px solid rgba(255, 255, 255, 0.25) !important;
   opacity: 1 !important;
@@ -393,6 +452,115 @@ tr:hover td { background: var(--color-air-blue); }
   margin-top: 8px;
   color: rgba(255, 255, 255, 0.85);
   font-family: var(--font-mono);
+}
+
+.title-slide .contact a {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.closing-slide {
+  justify-content: center;
+}
+
+.closing-slide .slide-header {
+  margin-bottom: 22px !important;
+}
+
+.closing-slide .slide-title-text {
+  font-size: 72px !important;
+  margin-bottom: 14px;
+}
+
+.closing-slide .slide-subtitle {
+  max-width: 980px;
+  margin: 0 auto;
+  font-size: 22px;
+}
+
+.closing-content {
+  width: min(1180px, 100%);
+  max-width: 1180px;
+  flex: 0 1 auto;
+  gap: 18px;
+}
+
+.closing-claim {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 24px;
+  padding: 26px 34px;
+  text-align: left;
+}
+
+.closing-claim h2 {
+  color: white;
+  font-family: var(--font-headline);
+  font-size: 32px;
+  line-height: 1.22;
+  margin-bottom: 10px;
+}
+
+.closing-claim p {
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.closing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.closing-point,
+.closing-contact {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 20px;
+  color: var(--color-rich-violet);
+  padding: 18px;
+  text-align: left;
+}
+
+.closing-point span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-action-violet);
+  color: white;
+  font-family: var(--font-headline);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.closing-point h3,
+.closing-contact h3 {
+  color: var(--color-rich-violet);
+  font-size: 17px;
+  margin-bottom: 8px;
+}
+
+.closing-point p,
+.closing-contact p {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.closing-actions {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 14px;
+}
+
+.closing-contact a {
+  color: var(--color-action-violet);
+  font-weight: 700;
+  text-decoration: none;
 }
 
 /* SECTION HEADER */
@@ -453,7 +621,7 @@ tr:hover td { background: var(--color-air-blue); }
 }
 
 .stat-label {
-  font-size: 15px;
+  font-size: 16px;
   color: var(--color-slate-text);
   font-weight: 500;
 }
@@ -465,7 +633,7 @@ tr:hover td { background: var(--color-air-blue); }
   padding: 24px;
   border-radius: var(--radius-buttons);
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.6;
   overflow-x: auto;
   border: 2px solid var(--color-cloud-mist);
@@ -515,6 +683,40 @@ code {
 .code-block .function { color: #2ed6ff; }
 .code-block .variable { color: #ffaae6; }
 
+/* LEGIBILITY FLOOR */
+.slide [style*="font-size: 11px"],
+.slide [style*="font-size: 12px"],
+.slide [style*="font-size: 13px"],
+.slide [style*="font-size: 14px"],
+.slide [style*="font-size: 15px"],
+.slide [style*="font-size:11px"],
+.slide [style*="font-size:12px"],
+.slide [style*="font-size:13px"],
+.slide [style*="font-size:14px"],
+.slide [style*="font-size:15px"] {
+  font-size: 16px !important;
+  line-height: 1.45 !important;
+}
+
+.slide pre[style*="font-size: 11px"],
+.slide pre[style*="font-size: 12px"],
+.slide pre[style*="font-size: 13px"],
+.slide pre[style*="font-size: 14px"],
+.slide pre[style*="font-size: 15px"],
+.slide [style*="font-family: monospace"][style*="font-size: 11px"],
+.slide [style*="font-family: monospace"][style*="font-size: 12px"],
+.slide [style*="font-family: monospace"][style*="font-size: 13px"],
+.slide [style*="font-family: monospace"][style*="font-size: 14px"],
+.slide [style*="font-family: monospace"][style*="font-size: 15px"],
+.slide [style*="font-family: 'JetBrains Mono'"][style*="font-size: 11px"],
+.slide [style*="font-family: 'JetBrains Mono'"][style*="font-size: 12px"],
+.slide [style*="font-family: 'JetBrains Mono'"][style*="font-size: 13px"],
+.slide [style*="font-family: 'JetBrains Mono'"][style*="font-size: 14px"],
+.slide [style*="font-family: 'JetBrains Mono'"][style*="font-size: 15px"] {
+  font-size: 15px !important;
+  line-height: 1.55 !important;
+}
+
 /* PROCESS FLOW */
 .process-flow {
   display: flex;
@@ -554,7 +756,7 @@ code {
 .process-step-label {
   font-weight: 600;
   color: var(--color-rich-violet);
-  font-size: 15px;
+  font-size: 16px;
   margin-top: 8px;
 }
 
@@ -598,14 +800,13 @@ code {
 
 /* REDUCED MOTION */
 @media (prefers-reduced-motion: reduce) {
-  .slide { animation: none; }
   .nav-btn { transition: none; }
 }
 
 /* PRINT */
 @media print {
   .nav-controls, .progress-bar, .slide-counter { display: none; }
-  .slide { display: block !important; page-break-after: always; position: relative; height: auto; }
+  .slide { display: block !important; page-break-after: always; position: relative; width: 100%; height: auto; transform: none; }
 }
 </style>
 </head>
@@ -632,11 +833,11 @@ code {
   </div>
 
   <div style="margin: 60px auto; max-width: 1100px;">
-    <img src="images/00_portada_gcms_ia.png" alt="IA en cromatografía" class="slide-image" style="max-width: 600px; margin: 0 auto; display: block; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+    <img src="../../images/00_portada_gcms_ia.png" alt="IA en cromatografía" class="slide-image" style="max-width: 600px; margin: 0 auto; display: block; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
   </div>
 
   <div class="author">Dr. Davinson Pezo</div>
-  <div class="contact">DataQuorum · info@dataquorum.net</div>
+  <div class="contact">DataQuorum · info@dataquorum.net · <a href="https://dataquorum.net" target="_blank" rel="noopener">dataquorum.net</a></div>
   <div class="contact" style="margin-top: 4px; font-size: 14px;">4 de junio de 2026</div>
 
   <div class="slide-footer" style="border-top: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7);">
@@ -675,7 +876,7 @@ code {
           <div style="background: var(--color-aqua-blue); color: var(--color-rich-violet); width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; flex-shrink: 0;">2</div>
           <div>
             <h3 style="font-family: var(--font-headline); font-size: 22px; color: var(--color-rich-violet); margin-bottom: 8px;">Literature review con NotebookLM</h3>
-            <p style="font-size: 16px; line-height: 1.6;">Resumir y auditar <strong>30-50 papers</strong> propios en minutos, identificar gaps de investigación y validar ideas.</p>
+            <p style="font-size: 16px; line-height: 1.6;">Resumir y auditar <strong>papers</strong> en minutos, identificar gaps de investigación y validar ideas.</p>
           </div>
         </div>
       </div>
@@ -685,7 +886,7 @@ code {
           <div style="background: var(--color-electric-green); color: var(--color-rich-violet); width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; flex-shrink: 0;">3</div>
           <div>
             <h3 style="font-family: var(--font-headline); font-size: 22px; color: var(--color-rich-violet); margin-bottom: 8px;">Servidor MCP propio</h3>
-            <p style="font-size: 16px; line-height: 1.6;">Conectar <strong>EcoLab RAG, Zotero o vuestros datos</strong> directamente a los agentes sin copy-paste.</p>
+            <p style="font-size: 16px; line-height: 1.6;">Conectar <strong>bases de datos externas o vuestros datos experimentales</strong> directamente a los agentes sin copy-paste.</p>
           </div>
         </div>
       </div>
@@ -810,7 +1011,7 @@ code {
         </div>
         <h3 style="font-family: var(--font-headline); font-size: 22px; color: var(--color-rich-violet); margin-bottom: 12px; text-align: center;">1. Análisis automatizado</h3>
         <p style="font-size: 15px; line-height: 1.6;">Lo que tardaba <strong>semanas</strong> (escribir scripts Python, validar, iterar) ahora tarda <strong>minutos</strong> con un agente bien dirigido.</p>
-        <p style="font-size: 14px; line-height: 1.5; margin-top: 12px; font-style: italic; opacity: 0.8;">Ejemplo real: 32 archivos CDF pre-procesados en 1 sesión.</p>
+        <p style="font-size: 14px; line-height: 1.5; margin-top: 12px; font-style: italic; opacity: 0.8;">Ejemplo real: 22 archivos CDF pre-procesados en 1 sesión.</p>
       </div>
 
       <div class="card card-blue">
@@ -818,8 +1019,8 @@ code {
           <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--color-aqua-blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
         </div>
         <h3 style="font-family: var(--font-headline); font-size: 22px; color: var(--color-rich-violet); margin-bottom: 12px; text-align: center;">2. Búsqueda de literatura</h3>
-        <p style="font-size: 15px; line-height: 1.6;">Sintetizar <strong>50 papers</strong> de un tema en un corpus navegable (NotebookLM). Detectar gaps en minutos, no en meses.</p>
-        <p style="font-size: 14px; line-height: 1.5; margin-top: 12px; font-style: italic; opacity: 0.8;">Ejemplo: 50 papers de COVs en embriones resumidos.</p>
+        <p style="font-size: 15px; line-height: 1.6;">Sintetizar <strong>5 papers clave</strong> de un tema en un corpus navegable (NotebookLM). Detectar gaps en minutos, no en meses.</p>
+        <p style="font-size: 14px; line-height: 1.5; margin-top: 12px; font-style: italic; opacity: 0.8;">Ejemplo: 5 papers de COVs en embriones resumidos.</p>
       </div>
 
       <div class="card card-green">
@@ -862,40 +1063,40 @@ code {
       <!-- Timeline horizontal -->
       <div style="position: absolute; top: 80px; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--color-action-violet) 0%, var(--color-aqua-blue) 50%, var(--color-electric-green) 100%);"></div>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 30px; position: relative;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 24px; position: relative;">
         <div style="text-align: center;">
           <div style="width: 20px; height: 20px; background: var(--color-action-violet); border-radius: 50%; margin: 0 auto 20px; border: 4px solid white; box-shadow: 0 0 0 3px var(--color-action-violet);"></div>
-          <div style="background: var(--color-air-blue); padding: 16px; border-radius: var(--radius-cards); margin-top: 20px;">
-            <div style="font-size: 13px; color: var(--color-rich-violet); font-weight: 700;">NOV 2024</div>
-            <div style="font-size: 14px; font-weight: 600; margin: 8px 0;">Claude 3.5 Sonnet</div>
-            <div style="font-size: 12px; opacity: 0.7;">Coding agents maduros</div>
+          <div style="background: var(--color-air-blue); padding: 18px; border-radius: var(--radius-cards); margin-top: 20px;">
+            <div style="font-size: 16px; color: var(--color-rich-violet); font-weight: 700;">NOV 2024</div>
+            <div style="font-size: 18px; font-weight: 700; margin: 8px 0; line-height: 1.25;">Claude 3.5 Sonnet</div>
+            <div style="font-size: 15px; opacity: 0.82; line-height: 1.35;">Coding agents maduros</div>
           </div>
         </div>
 
         <div style="text-align: center;">
           <div style="width: 20px; height: 20px; background: var(--color-action-violet); border-radius: 50%; margin: 0 auto 20px; border: 4px solid white; box-shadow: 0 0 0 3px var(--color-action-violet);"></div>
-          <div style="background: var(--color-soft-gray-fill); padding: 16px; border-radius: var(--radius-cards); margin-top: 20px;">
-            <div style="font-size: 13px; color: var(--color-rich-violet); font-weight: 700;">NOV 2025</div>
-            <div style="font-size: 14px; font-weight: 600; margin: 8px 0;">Antigravity v1 + Gemini 3</div>
-            <div style="font-size: 12px; opacity: 0.7;">IDE agent-first de Google</div>
+          <div style="background: var(--color-soft-gray-fill); padding: 18px; border-radius: var(--radius-cards); margin-top: 20px;">
+            <div style="font-size: 16px; color: var(--color-rich-violet); font-weight: 700;">NOV 2025</div>
+            <div style="font-size: 18px; font-weight: 700; margin: 8px 0; line-height: 1.25;">Antigravity v1 + Gemini 3</div>
+            <div style="font-size: 15px; opacity: 0.82; line-height: 1.35;">IDE agent-first de Google</div>
           </div>
         </div>
 
         <div style="text-align: center;">
           <div style="width: 20px; height: 20px; background: var(--color-aqua-blue); border-radius: 50%; margin: 0 auto 20px; border: 4px solid white; box-shadow: 0 0 0 3px var(--color-aqua-blue);"></div>
-          <div style="background: var(--color-air-blue); padding: 16px; border-radius: var(--radius-cards); margin-top: 20px; border: 2px solid var(--color-aqua-blue);">
-            <div style="font-size: 13px; color: var(--color-rich-violet); font-weight: 700;">FEB 2026</div>
-            <div style="font-size: 14px; font-weight: 600; margin: 8px 0;">Claude Sonnet 4.6 / Opus 4.6</div>
-            <div style="font-size: 12px; opacity: 0.7;">Anthropic, MCP estable</div>
+          <div style="background: var(--color-air-blue); padding: 18px; border-radius: var(--radius-cards); margin-top: 20px; border: 2px solid var(--color-aqua-blue);">
+            <div style="font-size: 16px; color: var(--color-rich-violet); font-weight: 700;">FEB 2026</div>
+            <div style="font-size: 18px; font-weight: 700; margin: 8px 0; line-height: 1.25;">Claude Sonnet 4.6 / Opus 4.6</div>
+            <div style="font-size: 15px; opacity: 0.82; line-height: 1.35;">Anthropic, MCP estable</div>
           </div>
         </div>
 
         <div style="text-align: center;">
           <div style="width: 20px; height: 20px; background: var(--color-electric-green); border-radius: 50%; margin: 0 auto 20px; border: 4px solid white; box-shadow: 0 0 0 3px var(--color-electric-green);"></div>
-          <div style="background: var(--color-lush-green); padding: 16px; border-radius: var(--radius-cards); margin-top: 20px; border: 2px solid var(--color-electric-green);">
-            <div style="font-size: 13px; color: var(--color-rich-violet); font-weight: 700;">MAY 2026</div>
-            <div style="font-size: 14px; font-weight: 600; margin: 8px 0;">Antigravity 2.0 + I/O</div>
-            <div style="font-size: 12px; opacity: 0.7;">Gemini 3.5 Flash, Science Skills</div>
+          <div style="background: var(--color-lush-green); padding: 18px; border-radius: var(--radius-cards); margin-top: 20px; border: 2px solid var(--color-electric-green);">
+            <div style="font-size: 16px; color: var(--color-rich-violet); font-weight: 700;">MAY 2026</div>
+            <div style="font-size: 18px; font-weight: 700; margin: 8px 0; line-height: 1.25;">Antigravity 2.0 + I/O</div>
+            <div style="font-size: 15px; opacity: 0.82; line-height: 1.35;">Gemini 3.5 Flash, Science Skills</div>
           </div>
         </div>
       </div>
@@ -903,16 +1104,16 @@ code {
 
     <div class="grid-3 mt-30">
       <div class="card">
-        <h4 style="font-family: var(--font-headline); color: var(--color-rich-violet); margin-bottom: 8px;">LLMs generalistas</h4>
-        <p style="font-size: 14px; line-height: 1.5;">Gemini 3.5 Flash/Pro, Claude 4.6, GPT-OSS 120B, Llama 4</p>
+        <h4 style="font-family: var(--font-headline); color: var(--color-rich-violet); margin-bottom: 8px; font-size: 20px;">LLMs generalistas</h4>
+        <p style="font-size: 16px; line-height: 1.5;">Gemini 3.5 Flash/Pro, Claude 4.6, GPT-OSS 120B, Llama 4</p>
       </div>
       <div class="card">
-        <h4 style="font-family: var(--font-headline); color: var(--color-rich-violet); margin-bottom: 8px;">LLMs científicos</h4>
-        <p style="font-size: 14px; line-height: 1.5;">ChemBERTa, ESM (proteínas), AlphaFold, AlphaGenome</p>
+        <h4 style="font-family: var(--font-headline); color: var(--color-rich-violet); margin-bottom: 8px; font-size: 20px;">LLMs científicos</h4>
+        <p style="font-size: 16px; line-height: 1.5;">ChemBERTa, ESM (proteínas), AlphaFold, AlphaGenome</p>
       </div>
       <div class="card">
-        <h4 style="font-family: var(--font-headline); color: var(--color-rich-violet); margin-bottom: 8px;">Agentes + MCP</h4>
-        <p style="font-size: 14px; line-height: 1.5;">Antigravity, Cursor, Claude Code, Windsurf. MCP como estándar.</p>
+        <h4 style="font-family: var(--font-headline); color: var(--color-rich-violet); margin-bottom: 8px; font-size: 20px;">Agentes + MCP</h4>
+        <p style="font-size: 16px; line-height: 1.5;">Antigravity, Cursor, Claude Code, Windsurf. MCP como estándar.</p>
       </div>
     </div>
   </div>
@@ -937,11 +1138,11 @@ code {
   </div>
 
   <div class="slide-content">
-    <div class="two-col-equal">
+    <div class="two-col-equal" style="gap: 34px; align-items: center;">
       <div>
         <div style="display: flex; flex-direction: column; gap: 12px;">
           <div style="background: var(--color-rich-violet); color: white; padding: 20px 24px; border-radius: var(--radius-cards); display: flex; align-items: center; gap: 16px;">
-            <div style="background: rgba(255,255,255,0.2); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 20px; font-family: var(--font-headline);">4</div>
+            <div style="background: rgba(255,255,255,0.2); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 20px; font-family: var(--font-headline);">1</div>
             <div>
               <div style="font-family: var(--font-headline); font-weight: 700; font-size: 18px;">LLMs</div>
               <div style="font-size: 14px; opacity: 0.9;">Gemini 3.5 · Claude 4.6 · GPT-OSS · Llama 4</div>
@@ -949,7 +1150,7 @@ code {
           </div>
 
           <div style="background: var(--color-action-violet); color: white; padding: 20px 24px; border-radius: var(--radius-cards); display: flex; align-items: center; gap: 16px;">
-            <div style="background: rgba(255,255,255,0.2); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 20px; font-family: var(--font-headline);">3</div>
+            <div style="background: rgba(255,255,255,0.2); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 20px; font-family: var(--font-headline);">2</div>
             <div>
               <div style="font-family: var(--font-headline); font-weight: 700; font-size: 18px;">Herramientas</div>
               <div style="font-size: 14px; opacity: 0.9;">Antigravity · NotebookLM · Cursor</div>
@@ -957,7 +1158,7 @@ code {
           </div>
 
           <div style="background: var(--color-aqua-blue); color: var(--color-rich-violet); padding: 20px 24px; border-radius: var(--radius-cards); display: flex; align-items: center; gap: 16px;">
-            <div style="background: rgba(255,255,255,0.5); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 20px; font-family: var(--font-headline);">2</div>
+            <div style="background: rgba(255,255,255,0.5); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 20px; font-family: var(--font-headline);">3</div>
             <div>
               <div style="font-family: var(--font-headline); font-weight: 700; font-size: 18px;">Conectores (MCP)</div>
               <div style="font-size: 14px; opacity: 0.9;">Estándar abierto · servidores propios</div>
@@ -965,10 +1166,10 @@ code {
           </div>
 
           <div style="background: var(--color-soft-gray-fill); color: var(--color-rich-violet); padding: 20px 24px; border-radius: var(--radius-cards); display: flex; align-items: center; gap: 16px; border: 2px solid var(--color-cloud-mist);">
-            <div style="background: var(--color-rich-violet); color: white; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 20px; font-family: var(--font-headline);">1</div>
+            <div style="background: var(--color-rich-violet); color: white; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 20px; font-family: var(--font-headline);">4</div>
             <div>
               <div style="font-family: var(--font-headline); font-weight: 700; font-size: 18px;">Datos</div>
-              <div style="font-size: 14px; opacity: 0.9;">EcoLab RAG · Zotero · vuestros papers</div>
+              <div style="font-size: 14px; opacity: 0.9;">Cromatogramas · papers · bases externas</div>
             </div>
           </div>
         </div>
@@ -979,7 +1180,7 @@ code {
       </div>
 
       <div>
-        <img src="images/01_stack_ia_moderno.png" alt="Stack IA moderno" class="slide-image">
+        <img src="../../images/01_stack_ia_moderno.png" alt="Stack IA moderno" class="slide-image">
         <p class="image-caption">Las 4 capas del stack IA moderno — datos, conectores, herramientas, modelos</p>
 
         <div style="background: var(--color-soft-gray-fill); padding: 20px; border-radius: var(--radius-cards); margin-top: 20px;">
@@ -1010,7 +1211,7 @@ code {
   </div>
 
   <div class="slide-content">
-    <table>
+    <table class="table-readable">
       <thead>
         <tr>
           <th style="width: 40%;">Lo que la gente cree</th>
@@ -1075,18 +1276,18 @@ code {
       <div>
         <div class="card card-violet mb-20">
           <h3 style="font-family: var(--font-headline); color: var(--color-rich-violet); font-size: 22px; margin-bottom: 12px;">El problema biológico</h3>
-          <p style="font-size: 16px; line-height: 1.6;">En producción bovina, identificar embriones <strong>vivos vs muertos</strong> sin destruirlos es crítico (impacto económico: miles de millones USD/año).</p>
+          <p style="font-size: 17px; line-height: 1.6;">En producción bovina, identificar embriones <strong>vivos vs muertos</strong> sin destruirlos es crítico (impacto económico: miles de millones USD/año).</p>
         </div>
 
         <div class="card mb-20">
           <h4 style="font-family: var(--font-headline); color: var(--color-rich-violet); margin-bottom: 8px;">La técnica analítica</h4>
-          <p style="font-size: 15px; line-height: 1.5;">HS-SPME-GC-MS: microextracción en fase sólida + cromatografía de gases + espectrometría de masas. Detecta <strong>compuestos orgánicos volátiles</strong> (COVs) emitidos por embriones.</p>
+          <p style="font-size: 17px; line-height: 1.5;">HS-SPME-GC-MS: microextracción en fase sólida + cromatografía de gases + espectrometría de masas. Detecta <strong>compuestos orgánicos volátiles</strong> (COVs) emitidos por embriones.</p>
         </div>
 
         <div class="card card-blue">
           <h4 style="font-family: var(--font-headline); color: var(--color-rich-violet); margin-bottom: 8px;">Lo que vais a ver</h4>
           <ul class="bullet-list">
-            <li>32 archivos <strong>CDF</strong> crudos (Agilent)</li>
+            <li>22 archivos <strong>CDF</strong> crudos (Agilent)</li>
             <li>2 dispositivos de extracción (dev01, dev02)</li>
             <li>2 modos de muestreo (Single, Pooled)</li>
             <li>Pipeline IA-asistido: CDF → Python → PLS-DA → biomarcadores</li>
@@ -1098,20 +1299,20 @@ code {
       <div>
         <div class="stat-callout mb-20" style="background: linear-gradient(135deg, var(--color-action-violet), var(--color-rich-violet)); color: white; padding: 24px 20px;">
           <div class="stat-number" style="color: white; font-size: 56px;">90</div>
-          <div class="stat-label" style="color: white; font-size: 14px;">minutos dedicados a este caso en la clase</div>
+          <div class="stat-label" style="color: white; font-size: 18px; line-height: 1.3;">minutos dedicados a este caso en la clase</div>
         </div>
 
         <div class="card mb-20" style="background: linear-gradient(135deg, #fff5e0 0%, #ffe0b3 100%); border: 2px solid #f59e0b;">
-          <h4 style="font-family: var(--font-headline); color: var(--color-rich-violet); margin-bottom: 8px; font-size: 17px;">Por qué este caso es valioso</h4>
+          <h4 style="font-family: var(--font-headline); color: var(--color-rich-violet); margin-bottom: 8px; font-size: 21px;">Por qué este caso es valioso</h4>
           <ul class="bullet-list" style="gap: 8px;">
-            <li style="font-size: 14px;"><strong>Honestidad total</strong> — qué falló, qué outliers hubo, qué descartes tomamos</li>
-            <li style="font-size: 14px;"><strong>Pipeline reproducible</strong> — código y datos existen</li>
-            <li style="font-size: 14px;"><strong>Aplicabilidad directa</strong> — los mismos pasos valen para vuestro próximo análisis GC-MS</li>
+            <li style="font-size: 16px; line-height: 1.45;"><strong>Honestidad total</strong> — qué falló, qué outliers hubo, qué descartes tomamos</li>
+            <li style="font-size: 16px; line-height: 1.45;"><strong>Pipeline reproducible</strong> — código y datos existen</li>
+            <li style="font-size: 16px; line-height: 1.45;"><strong>Aplicabilidad directa</strong> — los mismos pasos valen para vuestro próximo análisis GC-MS</li>
           </ul>
         </div>
 
         <div class="card" style="background: var(--color-soft-gray-fill); border-left: 6px solid var(--color-action-violet);">
-          <p style="font-size: 14px; line-height: 1.5;"><strong style="color: var(--color-rich-violet);">Bloque 9</strong> = el corazón de la clase. Os llevo paso a paso, desde los CDFs crudos hasta el informe final con biomarcadores validados.</p>
+          <p style="font-size: 17px; line-height: 1.5;"><strong style="color: var(--color-rich-violet);">Bloque 9</strong> = el corazón de la clase. Os llevo paso a paso, desde los CDFs crudos hasta el informe final con biomarcadores validados.</p>
         </div>
       </div>
     </div>
@@ -1145,17 +1346,17 @@ code {
 
         <div class="card mb-20">
           <h4 style="font-family: var(--font-headline); color: var(--color-rich-violet); margin-bottom: 12px;">Lo que cambia con Antigravity</h4>
-          <p style="font-size: 15px; line-height: 1.6;">Pasamos de "IA que te ayuda a escribir código" a <strong>"IA que ejecuta tareas complejas de principio a fin"</strong>, con artefactos verificables, acceso a terminal, navegador y editor, y capacidad de orquestar múltiples agentes en paralelo.</p>
+          <p style="font-size: 17px; line-height: 1.55;">Pasamos de "IA que te ayuda a escribir código" a <strong>"IA que ejecuta tareas complejas de principio a fin"</strong>, con artefactos verificables, acceso a terminal, navegador y editor, y capacidad de orquestar múltiples agentes en paralelo.</p>
         </div>
 
         <div style="background: var(--color-soft-gray-fill); padding: 20px; border-radius: var(--radius-cards); border-left: 6px solid var(--color-electric-green);">
-          <p style="font-size: 14px; color: var(--color-rich-violet); font-weight: 600;">URL oficial:</p>
-          <p style="font-family: var(--font-mono); font-size: 15px; margin-top: 4px;">https://antigravity.google</p>
+          <p style="font-size: 16px; color: var(--color-rich-violet); font-weight: 600;">URL oficial:</p>
+          <p style="font-family: var(--font-mono); font-size: 16px; margin-top: 4px;">https://antigravity.google</p>
         </div>
       </div>
 
       <div>
-        <img src="images/02_antigravity_producto.png" alt="Antigravity como producto" class="slide-image">
+        <img src="../../images/02_antigravity_producto.png" alt="Antigravity como producto" class="slide-image">
         <p class="image-caption">Antigravity: el ecosistema de IA agent-first de Google</p>
       </div>
     </div>
@@ -1331,7 +1532,7 @@ code {
           <div class="code-block">
 <span class="comment"># Plan: Análisis de biomarcadores embriones</span>
 
-<span class="keyword">## 1.</span> Cargar 32 archivos CDF <span class="string">dev01/dev02</span>
+<span class="keyword">## 1.</span> Cargar 22 archivos CDF <span class="string">dev01/dev02</span>
    <span class="comment">→ pre-procesado con script_01.py</span>
 
 <span class="keyword">## 2.</span> Extraer EICs de m/z 49 y 84
@@ -1449,7 +1650,7 @@ code {
   <div class="slide-content">
     <div class="two-col-equal">
       <div>
-        <img src="images/03_antigravity_4_productos.png" alt="4 productos Antigravity" class="slide-image">
+        <img src="../../images/03_antigravity_4_productos.png" alt="4 productos Antigravity" class="slide-image">
         <p class="image-caption">El mismo motor de IA, 4 formas de acceder</p>
       </div>
 
@@ -1526,7 +1727,7 @@ code {
   </div>
 
   <div class="slide-content">
-    <img src="images/10_python_vibe_coding_evolucion.png" alt="Python e IA científica" class="slide-image" style="max-width: 700px; margin: 0 auto; display: block; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+    <img src="../../images/10_python_vibe_coding_evolucion.png" alt="Python e IA científica" class="slide-image" style="max-width: 700px; margin: 0 auto; display: block; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
 
     <div style="background: rgba(255,255,255,0.95); padding: 24px; border-radius: var(--radius-cards); margin-top: 24px; max-width: 900px; margin-left: auto; margin-right: auto;">
       <p style="font-size: 18px; color: var(--color-rich-violet); line-height: 1.6; text-align: center;">
@@ -1614,7 +1815,7 @@ code {
   <div class="slide-content">
     <div class="two-col-equal">
       <div>
-        <img src="images/04_vibe_coding_workflow.png" alt="Vibe coding workflow" class="slide-image">
+        <img src="../../images/04_vibe_coding_workflow.png" alt="Vibe coding workflow" class="slide-image">
 
         <div class="alert">
           <strong>Definición Karpathy:</strong> "You give in to the vibes, embrace exponentials, and forget that the code even exists."
@@ -1626,7 +1827,7 @@ code {
         <div style="display: flex; flex-direction: column; gap: 14px;">
           <div class="card card-violet">
             <div style="display: flex; align-items: center; gap: 12px;">
-              <span class="step-number">1</span>
+              <div style="background: var(--color-action-violet); color: white; width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; flex-shrink: 0;">1</div>
               <div>
                 <strong>Describes</strong> lo que quieres en lenguaje natural
                 <p style="font-size: 13px; margin-top: 4px; color: var(--color-aqua-blue);">"Lee el CSV de embriones, haz PLS-DA y dame VIP scores"</p>
@@ -1635,7 +1836,7 @@ code {
           </div>
           <div class="card card-blue">
             <div style="display: flex; align-items: center; gap: 12px;">
-              <span class="step-number">2</span>
+              <div style="background: var(--color-aqua-blue); color: var(--color-rich-violet); width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; flex-shrink: 0;">2</div>
               <div>
                 <strong>El LLM genera</strong> código Python ejecutable
                 <p style="font-size: 13px; margin-top: 4px; color: var(--color-aqua-blue);">pandas + sklearn + matplotlib en 30 líneas</p>
@@ -1644,7 +1845,7 @@ code {
           </div>
           <div class="card card-green">
             <div style="display: flex; align-items: center; gap: 12px;">
-              <span class="step-number">3</span>
+              <div style="background: var(--color-electric-green); color: var(--color-rich-violet); width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; flex-shrink: 0;">3</div>
               <div>
                 <strong>Tú validas</strong> resultados y refinas el prompt
                 <p style="font-size: 13px; margin-top: 4px; color: var(--color-aqua-blue);">"El VIP de m/z 84 sale raro, filtra outliers"</p>
@@ -1653,7 +1854,7 @@ code {
           </div>
           <div class="card" style="background: var(--color-rich-violet); color: white;">
             <div style="display: flex; align-items: center; gap: 12px;">
-              <span class="step-number" style="background: var(--color-neon-pink); color: white;">4</span>
+              <div style="background: var(--color-neon-pink); color: white; width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; flex-shrink: 0;">4</div>
               <div>
                 <strong style="color: white;">Iteras</strong> hasta resultado publicable
                 <p style="font-size: 13px; margin-top: 4px; color: rgba(255,255,255,0.85);">El humano valida, el LLM produce</p>
@@ -1765,7 +1966,7 @@ code {
   </div>
 
   <div class="slide-content">
-    <img src="images/08_4_productos_comparativa.png" alt="4 productos comparativa" class="slide-image" style="max-width: 1000px; margin: 0 auto; display: block;">
+    <img src="../../images/08_4_productos_comparativa.png" alt="4 productos comparativa" class="slide-image" style="max-width: 1000px; margin: 0 auto; display: block;">
 
     <div class="alert" style="margin-top: 16px;">
       <strong>Nota importante:</strong> Esta diferenciación es una <strong>propuesta pedagógica del curso</strong>, no una separación oficial de Google. Los 4 productos comparten el mismo agent harness y pueden solaparse funcionalmente.
@@ -1810,7 +2011,7 @@ code {
       <div>
         <div class="card" style="background: var(--color-rich-violet); color: white; margin-bottom: 16px;">
           <h3 style="color: white;">Caso de uso real (este curso)</h3>
-          <p style="font-size: 14px; line-height: 1.6;">"Tengo 32 archivos .CDF de embriones. Necesito: leerlos, hacer baseline correction, detectar picos, alinear, PLS-DA, VIP scores, validar con m/z 49 y 84, escribir informe."</p>
+          <p style="font-size: 14px; line-height: 1.6;">"Tengo 22 archivos .CDF de embriones. Necesito: leerlos, hacer baseline correction, detectar picos, alinear, PLS-DA, VIP scores, validar con m/z 49 y 84, escribir informe."</p>
           <p style="font-size: 14px; margin-top: 12px; color: var(--color-mint);"><strong>En 2.0:</strong> un agente orquesta el pipeline completo con checkpoints.</p>
         </div>
 
@@ -1884,7 +2085,7 @@ code {
         </ul>
 
         <div class="cli-block" style="padding: 12px 16px; margin-top: 16px; font-size: 13px;">
-          <span class="prompt">$</span> antigravity run "analiza 32 CDFs"<br>
+          <span class="prompt">$</span> antigravity run "analiza 22 CDFs"<br>
           <span style="color: var(--color-electric-green);">→ Cargando... baseline OK. 8,432 picos. PLS-DA R²=0.78</span>
         </div>
       </div>
@@ -1986,7 +2187,7 @@ code {
   <div class="slide-content">
     <div class="two-col-equal">
       <div>
-        <img src="images/09_antigravity_cli_terminal.png" alt="Antigravity 2.0" class="slide-image">
+        <img src="../../images/09_antigravity_cli_terminal.png" alt="Antigravity 2.0" class="slide-image">
 
         <div class="alert">
           <strong>Dato clave:</strong> Antigravity 2.0 es la <strong>evolución</strong> de Antigravity IDE (lanzado 18-nov-2025). Google unifica la experiencia en un nuevo "agent-first surface" donde los agentes son protagonistas, no herramientas auxiliares.
@@ -1997,20 +2198,40 @@ code {
         <h3 style="color: var(--color-rich-violet); margin-bottom: 12px;">Las 4 novedades de la v2.0</h3>
         <div style="display: flex; flex-direction: column; gap: 12px;">
           <div class="card card-violet">
-            <strong style="color: var(--color-rich-violet);">1. Artifacts nativos</strong>
-            <p style="font-size: 14px; margin-top: 4px;">Los agentes producen artefactos visibles (código, tablas, figuras) que tú puedes revisar e iterar. No es un chat ciego.</p>
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <div style="background: var(--color-action-violet); color: white; width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; flex-shrink: 0;">1</div>
+              <div>
+                <strong style="color: var(--color-rich-violet);">Artifacts nativos</strong>
+                <p style="font-size: 14px; margin-top: 4px;">Los agentes producen artefactos visibles (código, tablas, figuras) que tú puedes revisar e iterar. No es un chat ciego.</p>
+              </div>
+            </div>
           </div>
           <div class="card card-blue">
-            <strong style="color: var(--color-rich-violet);">2. Multi-agente orquestado</strong>
-            <p style="font-size: 14px; margin-top: 4px;">Un agente "manager" coordina subagentes especializados. Cada uno con su contexto y herramientas.</p>
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <div style="background: var(--color-aqua-blue); color: var(--color-rich-violet); width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; flex-shrink: 0;">2</div>
+              <div>
+                <strong style="color: var(--color-rich-violet);">Multi-agente orquestado</strong>
+                <p style="font-size: 14px; margin-top: 4px;">Un agente "manager" coordina subagentes especializados. Cada uno con su contexto y herramientas.</p>
+              </div>
+            </div>
           </div>
           <div class="card card-green">
-            <strong style="color: var(--color-rich-violet);">3. Gemini 3.5 Flash por defecto</strong>
-            <p style="font-size: 14px; margin-top: 4px;">Velocidad 5× y 30% menos tokens que Gemini 3 Pro. Puedes cambiar a Pro cuando necesites más razonamiento.</p>
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <div style="background: var(--color-electric-green); color: var(--color-rich-violet); width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; flex-shrink: 0;">3</div>
+              <div>
+                <strong style="color: var(--color-rich-violet);">Gemini 3.5 Flash por defecto</strong>
+                <p style="font-size: 14px; margin-top: 4px;">Velocidad 5× y 30% menos tokens que Gemini 3 Pro. Puedes cambiar a Pro cuando necesites más razonamiento.</p>
+              </div>
+            </div>
           </div>
           <div class="card" style="background: var(--color-rich-violet); color: white;">
-            <strong style="color: white;">4. Science Skills integradas</strong>
-            <p style="font-size: 14px; margin-top: 4px;">Acceso nativo a UniProt, AlphaFold, AlphaGenome, InterPro. La IA consulta bases científicas, no solo busca en Google.</p>
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <div style="background: var(--color-neon-pink); color: white; width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; flex-shrink: 0;">4</div>
+              <div>
+                <strong style="color: white;">Science Skills integradas</strong>
+                <p style="font-size: 14px; margin-top: 4px;">Acceso nativo a UniProt, AlphaFold, AlphaGenome, InterPro. La IA consulta bases científicas, no solo busca en Google.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -2036,7 +2257,7 @@ code {
   <div class="slide-content">
     <div class="two-col-equal">
       <div>
-        <img src="images/05_alphafold_protein_3d.png" alt="AlphaFold 3D protein" class="slide-image">
+        <img src="../../images/05_alphafold_protein_3d.png" alt="AlphaFold 3D protein" class="slide-image">
         <p class="image-caption">Proteína AK2 (adenylate kinase 2) visualizada en 3D</p>
       </div>
 
@@ -2083,7 +2304,7 @@ code {
   <div class="slide-content">
     <div class="two-col-equal">
       <div>
-        <img src="images/07_alphafold_nobel_2024.png" alt="AlphaFold Nobel 2024" class="slide-image">
+        <img src="../../images/07_alphafold_nobel_2024.png" alt="AlphaFold Nobel 2024" class="slide-image">
         <p class="image-caption">Hassabis y Jumper (DeepMind) + David Baker — Nobel 2024</p>
       </div>
 
@@ -2126,7 +2347,7 @@ code {
   </div>
 
   <div class="slide-content">
-    <img src="images/06_science_skills_databases.png" alt="Science Skills databases" class="slide-image" style="max-width: 700px; margin: 0 auto; display: block;">
+    <img src="../../images/06_science_skills_databases.png" alt="Science Skills databases" class="slide-image" style="max-width: 700px; margin: 0 auto; display: block;">
 
     <div style="margin-top: 12px;">
       <h3 style="color: var(--color-rich-violet); margin-bottom: 8px; font-size: 18px;">Las 4 Science Skills de DeepMind</h3>
@@ -2245,8 +2466,8 @@ code {
     <h3 style="color: var(--color-rich-violet); margin-bottom: 12px;">Lo que el alumno verá</h3>
     <div style="display: flex; flex-direction: column; gap: 12px;">
       <div class="card card-blue">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <span class="step-number">1</span>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="background: var(--color-action-violet); color: white; width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; flex-shrink: 0;">1</div>
           <div>
             <strong>Plan de búsqueda</strong> generado por la IA
             <p style="font-size: 13px; margin-top: 4px; color: var(--color-aqua-blue);">"Buscaré en PubMed, Crossref y Google Scholar con queries X, Y, Z. Tiempo estimado: 4 minutos."</p>
@@ -2254,8 +2475,8 @@ code {
         </div>
       </div>
       <div class="card card-green">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <span class="step-number">2</span>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="background: var(--color-electric-green); color: var(--color-rich-violet); width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; flex-shrink: 0;">2</div>
           <div>
             <strong>Tabla de evidencia</strong> construida en tiempo real
             <p style="font-size: 13px; margin-top: 4px; color: var(--color-aqua-blue);">10 papers con DOI, año, n, método, AUC. Verificable.</p>
@@ -2263,8 +2484,8 @@ code {
         </div>
       </div>
       <div class="card" style="background: var(--color-rich-violet); color: white;">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <span class="step-number" style="background: var(--color-neon-pink); color: white;">3</span>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="background: var(--color-neon-pink); color: white; width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; flex-shrink: 0;">3</div>
           <div>
             <strong style="color: white;">Artifact exportable</strong>
             <p style="font-size: 13px; margin-top: 4px; color: rgba(255,255,255,0.85);">CSV + Markdown + BibTeX. Listo para Methods section.</p>
@@ -2297,7 +2518,7 @@ code {
   <div class="slide-content">
     <div class="two-col-equal">
       <div>
-        <img src="images/06_science_skills_databases.png" alt="Caso AK2" class="slide-image">
+        <img src="../../images/06_science_skills_databases.png" alt="Caso AK2" class="slide-image">
         <p class="image-caption">AK2 — caso documentado de uso científico de Antigravity</p>
       </div>
 
@@ -2399,7 +2620,7 @@ code {
   </div>
 
   <div class="slide-content">
-    <img src="images/13_prompt_engineering_pyramid.png" alt="Pirámide prompt engineering" class="slide-image" style="max-width: 700px; margin: 0 auto; display: block; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+    <img src="../../images/13_prompt_engineering_pyramid.png" alt="Pirámide prompt engineering" class="slide-image" style="max-width: 700px; margin: 0 auto; display: block; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
 
     <div style="background: rgba(255,255,255,0.95); padding: 24px; border-radius: var(--radius-cards); margin-top: 24px; max-width: 900px; margin-left: auto; margin-right: auto;">
       <p style="font-size: 18px; color: var(--color-rich-violet); line-height: 1.6; text-align: center;">
@@ -2428,41 +2649,61 @@ code {
   <div class="slide-content">
     <div class="two-col-equal">
       <div>
-        <img src="images/13_prompt_engineering_pyramid.png" alt="Pirámide 4 capas" class="slide-image">
+        <img src="../../images/13_prompt_engineering_pyramid.png" alt="Pirámide 4 capas" class="slide-image">
       </div>
 
       <div>
         <h3 style="color: var(--color-rich-violet); margin-bottom: 16px;">Las 4 capas (de base a cúspide)</h3>
         <div style="display: flex; flex-direction: column; gap: 12px;">
-          <div class="card" style="background: var(--color-soft-gray-fill); border-left: 5px solid var(--color-rich-violet);">
-            <strong style="color: var(--color-rich-violet);">1. ROL Y CONTEXTO</strong>
-            <p style="font-size: 13px; margin-top: 4px;">Quién es la IA y en qué debe ser experta. Define tono, vocabulario, supuestos.</p>
-            <div style="background: white; padding: 8px; border-radius: 4px; font-family: monospace; font-size: 11px; margin-top: 6px;">
-              "Eres un químico analítico con 20 años de experiencia en GC-MS, especializado en metabolómica y quimiometría."
+          <div class="card card-violet" style="padding: 16px 18px;">
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <div style="background: var(--color-action-violet); color: white; width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; flex-shrink: 0;">1</div>
+              <div>
+                <strong style="color: var(--color-rich-violet);">ROL Y CONTEXTO</strong>
+                <p style="font-size: 13px; margin-top: 4px;">Quién es la IA y en qué debe ser experta. Define tono, vocabulario, supuestos.</p>
+                <div style="background: white; padding: 8px; border-radius: 4px; font-family: monospace; font-size: 11px; margin-top: 6px;">
+                  "Eres un químico analítico con 20 años de experiencia en GC-MS, especializado en metabolómica y quimiometría."
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="card" style="background: var(--color-soft-gray-fill); border-left: 5px solid var(--color-aqua-blue);">
-            <strong style="color: var(--color-rich-violet);">2. TAREA ESPECÍFICA</strong>
-            <p style="font-size: 13px; margin-top: 4px;">Qué quieres que haga. Verbo de acción + objetivo medible.</p>
-            <div style="background: white; padding: 8px; border-radius: 4px; font-family: monospace; font-size: 11px; margin-top: 6px;">
-              "Aplica PLS-DA al dataset de embriones y extrae los 10 features con VIP > 1.5."
+          <div class="card card-blue" style="padding: 16px 18px;">
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <div style="background: var(--color-aqua-blue); color: var(--color-rich-violet); width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; flex-shrink: 0;">2</div>
+              <div>
+                <strong style="color: var(--color-rich-violet);">TAREA ESPECÍFICA</strong>
+                <p style="font-size: 13px; margin-top: 4px;">Qué quieres que haga. Verbo de acción + objetivo medible.</p>
+                <div style="background: white; padding: 8px; border-radius: 4px; font-family: monospace; font-size: 11px; margin-top: 6px;">
+                  "Aplica PLS-DA al dataset de embriones y extrae los 10 features con VIP > 1.5."
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="card" style="background: var(--color-soft-gray-fill); border-left: 5px solid var(--color-mint);">
-            <strong style="color: var(--color-rich-violet);">3. FORMATO Y RESTRICCIONES</strong>
-            <p style="font-size: 13px; margin-top: 4px;">Cómo quieres el output. Tabla, lista, JSON, extensión...</p>
-            <div style="background: white; padding: 8px; border-radius: 4px; font-family: monospace; font-size: 11px; margin-top: 6px;">
-              "Devuelve una tabla markdown con columnas: m/z, RT (min), VIP score, nombre tentativo. Sin texto adicional."
+          <div class="card card-green" style="padding: 16px 18px;">
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <div style="background: var(--color-electric-green); color: var(--color-rich-violet); width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; flex-shrink: 0;">3</div>
+              <div>
+                <strong style="color: var(--color-rich-violet);">FORMATO Y RESTRICCIONES</strong>
+                <p style="font-size: 13px; margin-top: 4px;">Cómo quieres el output. Tabla, lista, JSON, extensión...</p>
+                <div style="background: white; padding: 8px; border-radius: 4px; font-family: monospace; font-size: 11px; margin-top: 6px;">
+                  "Devuelve una tabla markdown con columnas: m/z, RT (min), VIP score, nombre tentativo. Sin texto adicional."
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="card" style="background: var(--color-rich-violet); color: white; border-left: 5px solid var(--color-neon-violet);">
-            <strong style="color: white;">4. VALIDACIÓN</strong>
-            <p style="font-size: 13px; margin-top: 4px; color: rgba(255,255,255,0.9);">Pide al modelo que verifique su propia salida o apunte a evidencia.</p>
-            <div style="background: rgba(0,0,0,0.3); padding: 8px; border-radius: 4px; font-family: monospace; font-size: 11px; margin-top: 6px; color: white;">
-              "Verifica que m/z 49 y m/z 84 (fragmentos de carbonilos) estén en la lista. Si no, itera."
+          <div class="card" style="background: var(--color-rich-violet); color: white; padding: 16px 18px;">
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <div style="background: var(--color-neon-pink); color: white; width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; flex-shrink: 0;">4</div>
+              <div>
+                <strong style="color: white;">VALIDACIÓN</strong>
+                <p style="font-size: 13px; margin-top: 4px; color: rgba(255,255,255,0.9);">Pide al modelo que verifique su propia salida o apunte a evidencia.</p>
+                <div style="background: rgba(0,0,0,0.3); padding: 8px; border-radius: 4px; font-family: monospace; font-size: 11px; margin-top: 6px; color: white;">
+                  "Verifica que m/z 49 y m/z 84 (fragmentos de carbonilos) estén en la lista. Si no, itera."
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -2515,12 +2756,12 @@ code {
           <h3 style="color: var(--color-mint); margin: 0;">Estructurado y verificable</h3>
         </div>
         <div style="background: rgba(0,0,0,0.05); padding: 12px; border-radius: 8px; font-family: monospace; font-size: 12px; margin: 12px 0;">
-          "Eres un químico analítico experto en HS-SPME-GC-MS. Tengo un dataset de 22 muestras de embriones bovinos (8 Good, 6 Bad, 6 Culture, 4 Single) con 213 features después de filtrado. Aplica PLS-DA con 5-fold CV y devuelve una tabla markdown con los 10 features de mayor VIP score (columnas: m/z, RT_min, VIP, nombre_tentativo_NIST). Verifica que m/z 49 y m/z 84 aparezcan (son fragmentos diagnósticos de aldehídos)."
+          "Eres un químico analítico experto en HS-SPME-GC-MS. Tengo un dataset de 22 muestras de embriones bovinos: 6 Pooled Good, 6 Pooled Bad, 6 Culture, 2 Single Good y 2 Single Culture, con 213 features después de filtrado. Aplica PLS-DA con 5-fold CV y devuelve una tabla markdown con los 10 features de mayor VIP score (columnas: m/z, RT_min, VIP, nombre_tentativo_NIST). Verifica que m/z 49 y m/z 84 aparezcan (son fragmentos diagnósticos de aldehídos)."
         </div>
         <h4 style="color: var(--color-mint); margin-top: 12px;">Fortalezas:</h4>
         <ul style="font-size: 13px; line-height: 1.6;">
           <li>Rol claro: experto en HS-SPME-GC-MS</li>
-          <li>Contexto: 22 muestras, 213 features, grupos definidos</li>
+          <li>Contexto: 22 muestras, 213 features, configuraciones definidas</li>
           <li>Tarea: PLS-DA con 5-fold CV (específico)</li>
           <li>Formato: tabla markdown con columnas exactas</li>
           <li>Validación: verificación explícita con m/z conocidos</li>
@@ -2553,12 +2794,12 @@ code {
   </div>
 
   <div class="slide-content">
-    <div class="two-col-equal">
+    <div class="two-col-equal" style="gap: 28px;">
       <div>
-        <h3 style="color: var(--color-rich-violet); margin-bottom: 12px;">1. Few-shot prompting</h3>
-        <p style="font-size: 14px; line-height: 1.6;">Proporciona 2-3 ejemplos del input y output deseado. La IA generaliza el patrón.</p>
+        <h3 style="color: var(--color-rich-violet); margin-bottom: 14px; font-size: 26px;">1. Few-shot prompting</h3>
+        <p style="font-size: 17px; line-height: 1.65;">Proporciona 2-3 ejemplos del input y output deseado. La IA generaliza el patrón.</p>
 
-        <div style="background: var(--color-soft-gray-fill); padding: 14px; border-radius: 8px; font-family: monospace; font-size: 12px; margin-top: 12px;">
+        <div style="background: var(--color-soft-gray-fill); padding: 18px; border-radius: 12px; font-family: monospace; font-size: 16px; line-height: 1.65; margin-top: 16px;">
           <strong>Ejemplo 1:</strong><br>
           Input: "embrion_001.cdf, RT 15.6, m/z 43"<br>
           Output: "RT 15.59 min, m/z 43.0 → posible carbonilo (VIP 1.77)"<br><br>
@@ -2570,14 +2811,14 @@ code {
           Output: ?
         </div>
 
-        <p style="font-size: 12px; margin-top: 8px; color: var(--color-aqua-blue);"><strong>Cuándo usar:</strong> cuando quieres un formato MUY específico que es difícil de describir verbalmente.</p>
+        <p style="font-size: 17px; line-height: 1.55; margin-top: 16px; color: var(--color-rich-violet); background: var(--color-air-blue); border-left: 6px solid var(--color-aqua-blue); padding: 12px 16px; border-radius: 12px;"><strong>Cuándo usar:</strong> cuando quieres un formato MUY específico que es difícil de describir verbalmente.</p>
       </div>
 
       <div>
-        <h3 style="color: var(--color-rich-violet); margin-bottom: 12px;">2. Chain-of-thought (CoT)</h3>
-        <p style="font-size: 14px; line-height: 1.6;">Pide a la IA que explique su razonamiento paso a paso antes de dar la respuesta final.</p>
+        <h3 style="color: var(--color-rich-violet); margin-bottom: 14px; font-size: 26px;">2. Chain-of-thought (CoT)</h3>
+        <p style="font-size: 17px; line-height: 1.65;">Pide a la IA que explique su razonamiento paso a paso antes de dar la respuesta final.</p>
 
-        <div style="background: var(--color-soft-gray-fill); padding: 14px; border-radius: 8px; font-family: monospace; font-size: 12px; margin-top: 12px;">
+        <div style="background: var(--color-soft-gray-fill); padding: 18px; border-radius: 12px; font-family: monospace; font-size: 16px; line-height: 1.65; margin-top: 16px;">
           "Para cada feature con VIP > 1.5:<br>
           1. Explica por qué VIP es alto (variabilidad entre grupos vs. dentro)<br>
           2. Identifica su posible identidad química (m/z + RT + patrón)<br>
@@ -2585,9 +2826,9 @@ code {
           4. Solo entonces clasifícalo como biomarcador candidato"
         </div>
 
-        <p style="font-size: 12px; margin-top: 8px; color: var(--color-aqua-blue);"><strong>Cuándo usar:</strong> análisis complejos donde la IA puede "alucinar" si va directo a la respuesta. CoT reduce errores ~30%.</p>
+        <p style="font-size: 17px; line-height: 1.55; margin-top: 16px; color: var(--color-rich-violet); background: var(--color-air-blue); border-left: 6px solid var(--color-aqua-blue); padding: 12px 16px; border-radius: 12px;"><strong>Cuándo usar:</strong> análisis complejos donde la IA puede "alucinar" si va directo a la respuesta. CoT reduce errores ~30%.</p>
 
-        <div class="alert" style="margin-top: 12px;">
+        <div class="alert" style="margin-top: 16px; font-size: 17px; line-height: 1.55;">
           <strong>Bonus:</strong> el razonamiento de la IA te permite detectar dónde se equivoca. Si el paso 2 es correcto pero el 3 no, sabes que el problema es la interpretación biológica, no el cálculo.
         </div>
       </div>
@@ -2693,13 +2934,13 @@ Devuelve {estructura} con columnas: {lista_columnas}.
     <div class="two-col-equal">
       <div class="card card-blue">
         <h3 style="color: var(--color-rich-violet);">Criterios de evaluación</h3>
-        <ol style="font-size: 13px; line-height: 1.7;">
+        <ul style="font-size: 13px; line-height: 1.7;">
           <li>¿El rol es específico (no genérico)?</li>
           <li>¿El contexto da toda la info necesaria?</li>
           <li>¿La tarea tiene verbo de acción medible?</li>
           <li>¿El formato es inequívoco?</li>
           <li>¿La validación es verificable?</li>
-        </ol>
+        </ul>
       </div>
       <div class="card card-green">
         <h3 style="color: var(--color-rich-violet);">Bonus: iteración</h3>
@@ -2732,7 +2973,7 @@ Devuelve {estructura} con columnas: {lista_columnas}.
   <div class="slide-content">
     <div class="two-col-equal">
       <div>
-        <img src="images/14_mcp_architecture.png" alt="MCP Architecture" class="slide-image">
+        <img src="../../images/14_mcp_architecture.png" alt="MCP Architecture" class="slide-image">
       </div>
 
       <div>
@@ -2879,11 +3120,11 @@ Devuelve {estructura} con columnas: {lista_columnas}.
   </div>
 
   <div class="slide-content">
-    <img src="images/16_notebooklm_interface.png" alt="NotebookLM interface" class="slide-image" style="max-width: 800px; margin: 0 auto; display: block; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+    <img src="../../images/16_notebooklm_interface.png" alt="NotebookLM interface" class="slide-image" style="max-width: 800px; margin: 0 auto; display: block; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
 
     <div style="background: rgba(255,255,255,0.95); padding: 24px; border-radius: var(--radius-cards); margin-top: 24px; max-width: 900px; margin-left: auto; margin-right: auto;">
       <p style="font-size: 18px; color: var(--color-rich-violet); line-height: 1.6; text-align: center;">
-        <strong>NotebookLM lee 50 papers por ti y solo contesta con lo que encuentra en ellos.</strong><br>
+        <strong>NotebookLM trabaja con los 5 papers clave del curso y solo contesta con lo que encuentra en ellos.</strong><br>
         Cero alucinaciones. Cero inventos. Cada respuesta cita el paper exacto.
       </p>
     </div>
@@ -2955,24 +3196,24 @@ Devuelve {estructura} con columnas: {lista_columnas}.
   </div>
 
   <div class="slide-content">
-    <div class="two-col-equal">
+    <div class="two-col-equal" style="gap: 32px;">
       <div>
-        <h3 style="color: var(--color-rich-violet); margin-bottom: 12px;">Los 5 papers que subiremos</h3>
-        <ul style="font-size: 13px; line-height: 1.7;">
+        <h3 style="color: var(--color-rich-violet); margin-bottom: 18px; font-size: 26px;">Los 5 papers que subiremos</h3>
+        <ul style="font-size: 17px; line-height: 1.75; display: flex; flex-direction: column; gap: 10px; margin-left: 20px;">
           <li><strong>Honour et al. 2024</strong> — "VOCs as biomarkers of embryo viability using HS-SPME-GC-MS" <em style="color: var(--color-aqua-blue);">J. Proteome Res.</em></li>
           <li><strong>Pinheiro et al. 2023</strong> — "PLS-DA classification of bovine embryo culture media" <em style="color: var(--color-aqua-blue);">Metabolomics</em></li>
           <li><strong>Fancy et al. 2008</strong> — "Chemometric analysis of GC-MS embryo data" (clásico)</li>
           <li><strong>Lubes & Goodarzi 2018</strong> — "GC-MS-based metabolomics in reproductive biology" (review)</li>
           <li><strong>Zeng et al. 2011</strong> — "Baseline correction methods for GC-MS" <em style="color: var(--color-aqua-blue);">Anal. Methods</em></li>
         </ul>
-        <div class="alert">
+        <div class="alert" style="margin-top: 26px; font-size: 17px; line-height: 1.65; padding: 20px 24px;">
           <strong>Truco:</strong> añade también la guía de tu instrumento Agilent y el protocolo del laboratorio. NotebookLM los integra como "fuente de verdad metodológica".
         </div>
       </div>
 
       <div>
-        <h3 style="color: var(--color-rich-violet); margin-bottom: 12px;">Las 10 preguntas estratégicas</h3>
-        <ol style="font-size: 13px; line-height: 1.7;">
+        <h3 style="color: var(--color-rich-violet); margin-bottom: 18px; font-size: 26px;">Las 10 preguntas estratégicas</h3>
+        <ol style="font-size: 17px; line-height: 1.7; display: flex; flex-direction: column; gap: 8px; margin-left: 22px;">
           <li>¿Qué métodos de baseline correction se recomiendan para HS-SPME-GC-MS?</li>
           <li>¿Cuántas muestras por grupo son mínimas para PLS-DA robusto?</li>
           <li>¿Qué VIP score threshold se usa para biomarcadores?</li>
@@ -2984,7 +3225,7 @@ Devuelve {estructura} con columnas: {lista_columnas}.
           <li>¿Qué alternativas hay a PLS-DA para datos desbalanceados?</li>
           <li>¿Cómo reportar resultados según estándares Metabolomics Standards Initiative?</li>
         </ol>
-        <div class="alert" style="margin-top: 12px;">
+        <div class="alert" style="margin-top: 26px; font-size: 17px; line-height: 1.65; padding: 20px 24px;">
           <strong>Output:</strong> cada respuesta trae [1]-[5] referenciando el paper exacto. Si la pregunta no tiene respuesta en los 5 papers, lo dice.
         </div>
       </div>
@@ -3013,7 +3254,7 @@ Devuelve {estructura} con columnas: {lista_columnas}.
   </div>
 
   <div class="slide-content">
-    <img src="images/17_antigravity_notebooklm_workflow.png" alt="Antigravity + NotebookLM workflow" class="slide-image" style="max-width: 1000px; margin: 0 auto; display: block;">
+    <img src="../../images/17_antigravity_notebooklm_workflow.png" alt="Antigravity + NotebookLM workflow" class="slide-image" style="max-width: 1000px; margin: 0 auto; display: block;">
 
     <div class="alert" style="margin-top: 16px;">
       <strong>Idea central:</strong> NotebookLM es la "memoria de lectura" (papers), Antigravity 2.0 es la "memoria de ejecución" (código, datos, agentes). Combinados, cubren el 100% del pipeline de investigación.
@@ -3181,12 +3422,12 @@ Devuelve {estructura} con columnas: {lista_columnas}.
   </div>
 
   <div class="slide-content">
-    <img src="images/18_embriones_portada.png" alt="Caso embriones portada" class="slide-image" style="max-width: 800px; margin: 0 auto; display: block; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+    <img src="../../images/18_embriones_portada.png" alt="Caso embriones portada" class="slide-image" style="max-width: 720px; margin: 0 auto; display: block; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
 
-    <div style="background: rgba(255,255,255,0.95); padding: 24px; border-radius: var(--radius-cards); margin-top: 24px; max-width: 900px; margin-left: auto; margin-right: auto;">
-      <p style="font-size: 18px; color: var(--color-rich-violet); line-height: 1.6; text-align: center;">
-        <strong>Proyecto Milton · DataQuorum</strong> — colaboración con FZ Jülich (Alemania)<br>
-        De <strong>32 archivos .CDF crudos</strong> a <strong>10 biomarcadores validados</strong> en 90 minutos.
+    <div style="background: rgba(255,255,255,0.95); padding: 18px; border-radius: var(--radius-cards); margin-top: 14px; max-width: 900px; margin-left: auto; margin-right: auto;">
+      <p style="font-size: 16px; color: var(--color-rich-violet); line-height: 1.5; text-align: center;">
+        <strong>Proyecto Milton · DataQuorum</strong> — caso práctico de análisis GC-MS con IA<br>
+        De <strong>22 archivos .CDF crudos</strong> a <strong>10 biomarcadores validados</strong> en 90 minutos.
       </p>
     </div>
   </div>
@@ -3208,31 +3449,31 @@ Devuelve {estructura} con columnas: {lista_columnas}.
   </div>
 
   <div class="slide-content">
-    <div class="two-col-equal" style="gap: 20px;">
+    <div class="two-col-equal" style="gap: 32px;">
       <div>
-        <h3 style="color: var(--color-rich-violet); margin-bottom: 12px;">Contexto veterinario</h3>
-        <ul style="font-size: 14px; line-height: 1.7;">
+        <h3 style="color: var(--color-rich-violet); margin-bottom: 18px; font-size: 27px;">Contexto veterinario</h3>
+        <ul style="font-size: 18px; line-height: 1.75; display: flex; flex-direction: column; gap: 12px; margin-left: 20px;">
           <li>En producción bovina, solo <strong>30-40% de los embriones</strong> transferidos resultan en preñez exitosa.</li>
           <li>La selección embrionaria actual se basa en <strong>morfología</strong> (grado I-IV según IETS), con capacidad predictiva limitada.</li>
           <li>Métodos invasivos (biopsia) comprometen la viabilidad.</li>
           <li>El <strong>medio de cultivo</strong> contiene información metabólica del embrión que se descarta tras la transferencia.</li>
         </ul>
-        <div class="alert">
+        <div class="alert" style="margin-top: 28px; font-size: 18px; line-height: 1.65; padding: 22px 26px;">
           <strong>Hipótesis de trabajo:</strong> embriones viables y no viables secretan <strong>perfiles distintos de compuestos orgánicos volátiles (VOCs)</strong> al medio. Detectables por HS-SPME-GC-MS.
         </div>
       </div>
 
       <div>
-        <h3 style="color: var(--color-rich-violet); margin-bottom: 12px;">Lo que otros han encontrado</h3>
-        <ul style="font-size: 13px; line-height: 1.6;">
+        <h3 style="color: var(--color-rich-violet); margin-bottom: 18px; font-size: 27px;">Lo que otros han encontrado</h3>
+        <ul style="font-size: 18px; line-height: 1.75; display: flex; flex-direction: column; gap: 12px; margin-left: 20px;">
           <li><strong>Honour et al. 2024</strong> (J. Proteome Res.): VOCs distinguen embriones bovinos viables/no viables con AUC > 0.85.</li>
           <li><strong>Pinheiro et al. 2023</strong> (Metabolomics): PLS-DA clasifica medios de cultivo con 88% accuracy.</li>
           <li><strong>Fancy et al. 2008</strong>: paper fundacional de chemometrics aplicado a GC-MS de embriones humanos.</li>
         </ul>
 
-        <h3 style="color: var(--color-rich-violet); margin-top: 16px; margin-bottom: 12px;">Nuestro aporte</h3>
-        <div class="card card-green" style="padding: 16px;">
-          <p style="font-size: 14px; line-height: 1.6; color: var(--color-rich-violet);"><strong>Primer estudio</strong> que combina HS-SPME-GC-MS con PLS-DA + validación por m/z diagnósticos de carbonilos (49, 84) en embriones bovinos. Pipeline reproducible con IA.</p>
+        <h3 style="color: var(--color-rich-violet); margin-top: 34px; margin-bottom: 18px; font-size: 27px;">Nuestro aporte</h3>
+        <div class="card card-green" style="padding: 28px 30px;">
+          <p style="font-size: 19px; line-height: 1.7; color: var(--color-rich-violet);"><strong>Primer estudio</strong> que combina HS-SPME-GC-MS con PLS-DA + validación por m/z diagnósticos de carbonilos (49, 84) en embriones bovinos. Pipeline reproducible con IA.</p>
         </div>
       </div>
     </div>
@@ -3251,37 +3492,42 @@ Devuelve {estructura} con columnas: {lista_columnas}.
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
       Diseño experimental
     </h2>
-    <p class="slide-subtitle">22 muestras, 2 dispositivos, 4 grupos, 1 pregunta</p>
+    <p class="slide-subtitle">22 muestras, 2 dispositivos, 5 configuraciones, 1 pregunta</p>
   </div>
 
   <div class="slide-content">
-    <img src="images/19_experimental_design.png" alt="Diseño experimental" class="slide-image" style="max-width: 700px; margin: 0 auto; display: block;">
+    <div style="display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(380px, 0.88fr); gap: 30px; align-items: center;">
+      <div>
+        <img src="../../images/19_experimental_design.png" alt="Diseño experimental" class="slide-image" style="max-width: 820px; width: 100%; margin: 0 auto; display: block;">
+      </div>
 
-    <div class="three-col" style="margin-top: 10px; gap: 12px;">
-      <div class="card card-violet" style="padding: 16px;">
-        <h3 style="color: var(--color-rich-violet); font-size: 16px;">4 grupos</h3>
-        <ul style="font-size: 12px; line-height: 1.5;">
-          <li><strong>Good</strong> n=8 — viables, transferidos con éxito</li>
-          <li><strong>Bad</strong> n=6 — no viables, descartados</li>
-          <li><strong>Culture</strong> n=6 — solo medio, control negativo</li>
-          <li><strong>Single</strong> n=4 — Good + Culture pareados</li>
-        </ul>
-      </div>
-      <div class="card card-blue" style="padding: 16px;">
-        <h3 style="color: var(--color-rich-violet); font-size: 16px;">2 dispositivos SPME</h3>
-        <ul style="font-size: 12px; line-height: 1.5;">
-          <li><strong>dev01</strong>: extracción vertical (estándar)</li>
-          <li><strong>dev02</strong>: extracción horizontal (comparación)</li>
-          <li>Permite evaluar efecto del dispositivo en la señal</li>
-        </ul>
-      </div>
-      <div class="card card-green" style="padding: 16px;">
-        <h3 style="color: var(--color-rich-violet); font-size: 16px;">2 modos de medición</h3>
-        <ul style="font-size: 12px; line-height: 1.5;">
-          <li><strong>Pooled</strong> (32 archivos): medio agrupado por grupo</li>
-          <li><strong>Single</strong>: cada embrión individual, replicado abril 2025</li>
-          <li>2 réplicas técnicas por muestra</li>
-        </ul>
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <div class="card card-violet" style="padding: 18px 20px;">
+          <h3 style="color: var(--color-rich-violet); font-size: 21px; margin-bottom: 8px;">5 configuraciones</h3>
+          <ul style="font-size: 16px; line-height: 1.45; margin-left: 18px;">
+            <li><strong>Pooled Good</strong> n=6 — viables</li>
+            <li><strong>Pooled Bad</strong> n=6 — no viables</li>
+            <li><strong>Culture</strong> n=6 — medio sin embriones</li>
+            <li><strong>Single Good</strong> n=2 — embrión individual</li>
+            <li><strong>Single Culture</strong> n=2 — blanco pareado</li>
+          </ul>
+        </div>
+        <div class="card card-blue" style="padding: 18px 20px;">
+          <h3 style="color: var(--color-rich-violet); font-size: 21px; margin-bottom: 8px;">2 dispositivos SPME</h3>
+          <ul style="font-size: 16px; line-height: 1.45; margin-left: 18px;">
+            <li><strong>dev01</strong>: extracción vertical estándar</li>
+            <li><strong>dev02</strong>: extracción horizontal comparativa</li>
+            <li>Permite evaluar el efecto del dispositivo en la señal</li>
+          </ul>
+        </div>
+        <div class="card card-green" style="padding: 18px 20px;">
+          <h3 style="color: var(--color-rich-violet); font-size: 21px; margin-bottom: 8px;">2 modos de medición</h3>
+          <ul style="font-size: 16px; line-height: 1.45; margin-left: 18px;">
+            <li><strong>Pooled</strong>: 18 archivos de medio agrupado</li>
+            <li><strong>Single</strong>: 4 archivos individuales/pareados</li>
+            <li>Comparación entre medio con y sin embrión</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -3297,7 +3543,7 @@ Devuelve {estructura} con columnas: {lista_columnas}.
     <span class="slide-number">Bloque 9 · Datos crudos</span>
     <h2 class="slide-title-text">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      Los datos crudos: 32 archivos .CDF
+      Los datos crudos: 22 archivos .CDF
     </h2>
     <p class="slide-subtitle">Total NetCDF de Agilent ChemStation — la fuente primaria de todo el análisis</p>
   </div>
@@ -3310,7 +3556,7 @@ Devuelve {estructura} con columnas: {lista_columnas}.
 │   ├── Good_pool_001.cdf      ← m/z 40-500, scan 1-4500
 │   ├── Good_pool_002.cdf      ← réplica técnica
 │   ├── Bad_pool_001.cdf
-│   ├── ... (32 archivos total)
+│   ├── ... (22 archivos total)
 │   ├── Culture_pool_001.cdf   ← blanco negativo
 │   └── Pooled embryos 2025 txt/   ← exportados a texto
 │       ├── Good_pool_001.txt
@@ -3333,11 +3579,7 @@ Devuelve {estructura} con columnas: {lista_columnas}.
       <div class="card card-violet" style="padding: 16px;">
         <h3 style="color: var(--color-rich-violet); font-size: 16px;">Formato CDF</h3>
         <p style="font-size: 13px; line-height: 1.5;"><strong>Common Data Format</strong> de NetCDF. Estándar para datos de espectrometría. Cada archivo contiene:</p>
-        <ul style="font-size: 12px; line-height: 1.5; color: var(--color-rich-violet);">
-          <li>Matriz <strong>(tiempo × m/z)</strong> con intensidades</li>
-          <li>Metadata: método, fecha, operador, parámetros</li>
-          <li>Scan data: TIC + cada scan individual</li>
-        </ul>
+        <p style="font-size: 13px; line-height: 1.5; color: var(--color-rich-violet); margin-top: 6px;">Matriz <strong>(tiempo × m/z)</strong> con intensidades. Metadata: método, fecha, operador y parámetros. Scan data: TIC + cada scan individual.</p>
       </div>
       <div class="card card-green" style="padding: 16px;">
         <h3 style="color: var(--color-rich-violet); font-size: 16px;">Por qué CDF y no CSV</h3>
@@ -3364,7 +3606,7 @@ Devuelve {estructura} con columnas: {lista_columnas}.
   </div>
 
   <div class="slide-content">
-    <img src="images/11_pipeline_embriones_6_etapas.png" alt="Pipeline 6 etapas" class="slide-image" style="max-width: 1000px; margin: 0 auto; display: block;">
+    <img src="../../images/11_pipeline_embriones_6_etapas.png" alt="Pipeline 6 etapas" class="slide-image" style="max-width: 1000px; margin: 0 auto; display: block;">
 
     <div class="alert" style="margin-top: 16px;">
       <strong>Pipeline en 6 etapas:</strong> (1) Lectura CDF → (2) Baseline correction ASLS → (3) Peak detection (1st derivative) → (4) Multi-sample alignment → (5) PLS-DA + VIP scores → (6) Biomarcadores validados (m/z 49, 84).
@@ -3388,41 +3630,41 @@ Devuelve {estructura} con columnas: {lista_columnas}.
   </div>
 
   <div class="slide-content">
-    <div class="three-col" style="gap: 16px;">
-      <div class="card card-violet">
-        <h3 style="color: var(--color-rich-violet);">1. Lectura de CDF</h3>
-        <p style="font-size: 13px; line-height: 1.6;">Python: <code>netCDF4</code> o <code>pyMSAviz</code>. Extraer matriz (tiempo × m/z) y metadata.</p>
-        <div style="background: var(--color-soft-gray-fill); padding: 10px; border-radius: 6px; margin-top: 8px; font-family: monospace; font-size: 11px;">
+    <div class="three-col" style="gap: 24px; align-items: stretch;">
+      <div class="card card-violet" style="padding: 30px 28px;">
+        <h3 style="color: var(--color-rich-violet); font-size: 26px; margin-bottom: 16px;">1. Lectura de CDF</h3>
+        <p style="font-size: 17px; line-height: 1.72;">Python: <code>netCDF4</code> o <code>pyMSAviz</code>. Extraer matriz (tiempo × m/z) y metadata.</p>
+        <div style="background: var(--color-soft-gray-fill); padding: 16px; border-radius: 10px; margin-top: 18px; font-family: monospace; font-size: 15px; line-height: 1.65;">
           ds = nc.Dataset('embryo.cdf')<br>
           time = ds.variables['scan_acquisition_time'][:]<br>
           mz = ds.variables['mass_values'][:]<br>
           intensity = ds.variables['intensity_values'][:]
         </div>
-        <p style="font-size: 11px; margin-top: 6px; color: var(--color-aqua-blue);">Validado: 32 archivos leídos en 8 segundos con Antigravity CLI</p>
+        <p style="font-size: 16px; line-height: 1.5; margin-top: 18px; color: var(--color-rich-violet); background: var(--color-air-blue); border-left: 6px solid var(--color-aqua-blue); padding: 12px 14px; border-radius: 10px;">Validado: 22 archivos leídos en 8 segundos con Antigravity CLI</p>
       </div>
 
-      <div class="card card-blue">
-        <h3 style="color: var(--color-rich-violet);">2. Baseline correction (ASLS)</h3>
-        <p style="font-size: 13px; line-height: 1.6;"><strong>Asymmetric Least Squares Smoothing</strong> (Eilers 2005). Parámetros: λ=10⁵, p=0.01.</p>
-        <p style="font-size: 12px; margin-top: 6px;">Quita la deriva de la línea base sin distorsionar picos. Superior a polinomios clásicos para señales de GC-MS.</p>
-        <p style="font-size: 11px; margin-top: 6px; color: var(--color-aqua-blue);">Implementación: <code>pybaselines.whittaker.asls()</code></p>
+      <div class="card card-blue" style="padding: 30px 28px;">
+        <h3 style="color: var(--color-rich-violet); font-size: 26px; margin-bottom: 16px;">2. Baseline correction (ASLS)</h3>
+        <p style="font-size: 17px; line-height: 1.72;"><strong>Asymmetric Least Squares Smoothing</strong> (Eilers, 2003). Parámetros: λ=10⁵, <strong>p=0.001</strong>.</p>
+        <p style="font-size: 17px; line-height: 1.72; margin-top: 18px;">Quita la deriva de la línea base sin distorsionar picos. Superior a polinomios clásicos para señales de GC-MS.</p>
+        <p style="font-size: 16px; line-height: 1.5; margin-top: 18px; color: var(--color-rich-violet); background: var(--color-canvas-white); border-left: 6px solid var(--color-aqua-blue); padding: 12px 14px; border-radius: 10px;">Implementación: <code>pybaselines.whittaker.asls()</code> — precede un filtro de <strong>media móvil</strong> para reducir ruido de alta frecuencia.</p>
       </div>
 
-      <div class="card card-green">
-        <h3 style="color: var(--color-rich-violet);">3. Peak detection (1ª derivada)</h3>
-        <p style="font-size: 13px; line-height: 1.6;">Detectar picos donde <strong>d(intensidad)/d(t)</strong> cambia de signo. Filtros:</p>
-        <ul style="font-size: 12px; line-height: 1.5;">
+      <div class="card card-green" style="padding: 30px 28px;">
+        <h3 style="color: var(--color-rich-violet); font-size: 26px; margin-bottom: 16px;">3. Peak detection (1ª derivada)</h3>
+        <p style="font-size: 17px; line-height: 1.72;">Detectar picos donde <strong>d(intensidad)/d(t)</strong> cambia de signo. Filtros:</p>
+        <ul style="font-size: 17px; line-height: 1.65; margin-top: 14px; margin-left: 20px;">
           <li>Altura mínima: 1% del máximo</li>
           <li>Anchura mínima: 3 scans</li>
           <li>Ruido: estimado por MAD (median absolute deviation)</li>
         </ul>
-        <p style="font-size: 11px; margin-top: 6px; color: var(--color-aqua-blue);">Output: lista de (RT, intensidad, m/z central)</p>
+        <p style="font-size: 16px; line-height: 1.5; margin-top: 18px; color: var(--color-rich-violet); background: var(--color-canvas-white); border-left: 6px solid var(--color-aqua-blue); padding: 12px 14px; border-radius: 10px;">Output: lista de (RT, intensidad, m/z central)</p>
       </div>
     </div>
 
-    <div class="card" style="background: var(--color-soft-gray-fill); border-left: 4px solid var(--color-rich-violet); margin-top: 16px;">
-      <h3 style="color: var(--color-rich-violet);">Output de las etapas 1-3</h3>
-      <p style="font-size: 13px; line-height: 1.6;">Para cada muestra: vector de <strong>8,000+ scans</strong> corregidos + lista de <strong>~300-500 picos</strong> candidatos con su (RT, intensidad, m/z). Próxima etapa: alinear entre muestras.</p>
+    <div class="card" style="background: var(--color-soft-gray-fill); border-left: 6px solid var(--color-rich-violet); margin-top: 24px; padding: 24px 28px;">
+      <h3 style="color: var(--color-rich-violet); font-size: 25px; margin-bottom: 12px;">Output de las etapas 1-3</h3>
+      <p style="font-size: 18px; line-height: 1.7;">Para cada muestra: vector de <strong>8,000+ scans</strong> corregidos + lista de <strong>~300-500 picos</strong> candidatos con su (RT, intensidad, m/z). Próxima etapa: alinear entre muestras.</p>
     </div>
   </div>
 
@@ -3443,43 +3685,44 @@ Devuelve {estructura} con columnas: {lista_columnas}.
   </div>
 
   <div class="slide-content">
-    <div class="three-col" style="gap: 16px;">
-      <div class="card card-violet">
-        <h3 style="color: var(--color-rich-violet);">4. Multi-sample alignment</h3>
-        <p style="font-size: 13px; line-height: 1.6;">Agrupar picos de todas las muestras en una <strong>matriz única</strong>:</p>
-        <ul style="font-size: 12px; line-height: 1.5;">
+    <div class="three-col" style="gap: 24px; align-items: stretch;">
+      <div class="card card-violet" style="padding: 30px 28px;">
+        <h3 style="color: var(--color-rich-violet); font-size: 26px; margin-bottom: 16px;">4. Multi-sample alignment</h3>
+        <p style="font-size: 17px; line-height: 1.72;">Agrupar picos de todas las muestras en una <strong>matriz única</strong>:</p>
+        <ul style="font-size: 17px; line-height: 1.65; margin-top: 14px; margin-left: 20px;">
           <li>Ventana RT: ΔRT ≤ 0.5 min</li>
           <li>Correlación: r ≥ 0.85 entre perfiles de intensidad</li>
           <li>Consenso: al menos 60% de muestras comparten el pico</li>
         </ul>
-        <p style="font-size: 11px; margin-top: 6px; color: var(--color-aqua-blue);">Output: <strong>matriz (22 muestras × 213 features)</strong> = nuestra X para PLS-DA</p>
+        <p style="font-size: 16px; line-height: 1.5; margin-top: 18px; color: var(--color-rich-violet); background: var(--color-air-blue); border-left: 6px solid var(--color-aqua-blue); padding: 12px 14px; border-radius: 10px;">Output: <strong>matriz (22 muestras × 213 features)</strong> = nuestra X para PLS-DA</p>
       </div>
 
-      <div class="card card-blue">
-        <h3 style="color: var(--color-rich-violet);">5. PLS-DA + VIP scores</h3>
-        <p style="font-size: 13px; line-height: 1.6;"><strong>Partial Least Squares Discriminant Analysis</strong>:</p>
-        <ul style="font-size: 12px; line-height: 1.5;">
+      <div class="card card-blue" style="padding: 30px 28px;">
+        <h3 style="color: var(--color-rich-violet); font-size: 26px; margin-bottom: 16px;">5. PLS-DA + VIP scores</h3>
+        <p style="font-size: 17px; line-height: 1.72;"><strong>Partial Least Squares Discriminant Analysis</strong>:</p>
+        <ul style="font-size: 17px; line-height: 1.65; margin-top: 14px; margin-left: 20px;">
           <li>2 componentes (PC1, PC2)</li>
-          <li>5-fold cross-validation</li>
-          <li>Métricas: R²X, Q², accuracy</li>
+          <li>Escalado previo: <strong>estandarización</strong> (media=0, varianza=1)</li>
+          <li>5-fold cross-validation · métrica: R² score</li>
           <li><strong>VIP score</strong> (Variable Importance in Projection) por feature</li>
         </ul>
-        <p style="font-size: 11px; margin-top: 6px; color: var(--color-aqua-blue);">Threshold biomarcador: VIP > 1.5</p>
+        <p style="font-size: 16px; line-height: 1.5; margin-top: 18px; color: var(--color-rich-violet); background: var(--color-canvas-white); border-left: 6px solid var(--color-aqua-blue); padding: 12px 14px; border-radius: 10px;">Threshold biomarcador: VIP > 1.5 (Zeng et al., 2011)</p>
       </div>
 
-      <div class="card card-green">
-        <h3 style="color: var(--color-rich-violet);">6. Validación cruzada</h3>
-        <p style="font-size: 13px; line-height: 1.6;">Confirmar biomarcadores con evidencia externa:</p>
-        <ul style="font-size: 12px; line-height: 1.5;">
-          <li><strong>Fragmentos diagnósticos:</strong> m/z 49 (aldehídos), m/z 84 (cetonas)</li>
-          <li><strong>Matching NIST:</strong> identificación tentativa con EI library</li>
-          <li><strong>Comparación literatura:</strong> NotebookLM valida vs. papers</li>
+      <div class="card card-green" style="padding: 30px 28px;">
+        <h3 style="color: var(--color-rich-violet); font-size: 26px; margin-bottom: 16px;">6. Filtrado + Validación</h3>
+        <p style="font-size: 17px; line-height: 1.72;"><strong>Filtrado de contaminantes</strong> antes de PLS-DA:</p>
+        <ul style="font-size: 17px; line-height: 1.65; margin-top: 8px; margin-left: 20px;">
+          <li>Eliminar <strong>siloxanos</strong>: m/z 73, 149, 207 (artefactos de columna GC)</li>
+          <li>Eliminar features presentes en &lt; 2 muestras</li>
+          <li>556 → <strong>213 features</strong> finales</li>
         </ul>
-        <p style="font-size: 11px; margin-top: 6px; color: var(--color-aqua-blue);">Output: <strong>10 biomarcadores validados</strong></p>
+        <p style="font-size: 17px; line-height: 1.72; margin-top: 12px;"><strong>Matching NIST17</strong>: quality score <strong>≥ 50</strong> para identidad tentativa. Validación con m/z 49 y 84 como fragmentos diagnósticos de carbonilos.</p>
+        <p style="font-size: 16px; line-height: 1.5; margin-top: 14px; color: var(--color-rich-violet); background: var(--color-canvas-white); border-left: 6px solid var(--color-aqua-blue); padding: 12px 14px; border-radius: 10px;">Output: <strong>10 biomarcadores candidatos</strong> (VIP > 1.5)</p>
       </div>
     </div>
 
-    <div class="alert" style="margin-top: 16px;">
+    <div class="alert" style="margin-top: 24px; font-size: 18px; line-height: 1.65; padding: 22px 26px;">
       <strong>Iteración con IA:</strong> el prompt que usamos en el bloque 5 (pirámide 4 capas) hace exactamente este flujo. Con Antigravity + MCP (Filesystem + PubMed), el ciclo completo dura 4 minutos.
     </div>
   </div>
@@ -3501,30 +3744,30 @@ Devuelve {estructura} con columnas: {lista_columnas}.
   </div>
 
   <div class="slide-content">
-    <div class="two-col-equal">
+    <div class="two-col-equal" style="gap: 34px; align-items: center;">
       <div>
-        <img src="images/20_plsda_score_plot.png" alt="PLS-DA Score Plot" class="slide-image">
+        <img src="../../images/20_plsda_score_plot.png" alt="PLS-DA Score Plot" class="slide-image">
       </div>
 
       <div>
-        <h3 style="color: var(--color-rich-violet); margin-bottom: 12px;">Métricas del modelo</h3>
-        <div class="card card-violet" style="margin-bottom: 12px;">
-          <table style="width: 100%; font-size: 14px;">
-            <tr><td><strong>R²X</strong></td><td>0.78</td><td style="color: var(--color-aqua-blue);">78% varianza X explicada</td></tr>
-            <tr><td><strong>Q²</strong></td><td>0.65</td><td style="color: var(--color-aqua-blue);">capacidad predictiva</td></tr>
-            <tr><td><strong>Accuracy</strong></td><td>85%</td><td style="color: var(--color-aqua-blue);">5-fold CV</td></tr>
+        <h3 style="color: var(--color-rich-violet); margin-bottom: 16px; font-size: 27px;">Métricas del modelo</h3>
+        <div class="card card-violet" style="margin-bottom: 28px; padding: 26px 28px;">
+          <table style="width: 100%; font-size: 17px; line-height: 1.6;">
+            <tr><td style="font-size: 17px; padding: 14px 16px;"><strong>R²X</strong></td><td style="font-size: 17px; padding: 14px 16px;">0.78</td><td style="font-size: 17px; padding: 14px 16px; color: var(--color-rich-violet); font-weight: 600;">78% varianza X explicada (ajuste)</td></tr>
+            <tr><td style="font-size: 17px; padding: 14px 16px;"><strong>CV R²</strong></td><td style="font-size: 17px; padding: 14px 16px; color: #c41e3a; font-weight: 700;">−0.47 ± 0.51</td><td style="font-size: 17px; padding: 14px 16px; color: var(--color-rich-violet); font-weight: 600;">capacidad predictiva (5-fold CV)</td></tr>
           </table>
+          <p style="font-size: 15px; margin-top: 12px; line-height: 1.5; color: var(--color-rich-violet);">CV R² negativo = el modelo no generaliza con n=22. Es exploración, no confirmación.</p>
         </div>
 
-        <h3 style="color: var(--color-rich-violet); margin-bottom: 12px;">Interpretación biológica</h3>
-        <ul style="font-size: 13px; line-height: 1.7;">
+        <h3 style="color: var(--color-rich-violet); margin-bottom: 16px; font-size: 27px;">Interpretación biológica</h3>
+        <ul style="font-size: 18px; line-height: 1.75; display: flex; flex-direction: column; gap: 12px; margin-left: 20px;">
           <li><strong>PC1 (60% varianza):</strong> separa embriones (Good + Bad) de Culture. Captura la "señal de embrión presente".</li>
-          <li><strong>PC2 (18% varianza):</strong> separa Good de Bad. Captura la "señal de viabilidad".</li>
-          <li>Los tres grupos forman <strong>clusters distintos</strong> con poco solapamiento.</li>
+          <li><strong>PC2 (18% varianza):</strong> Good_Pooled tiende al cuadrante superior derecho; Culture se distribuye a la izquierda. Solapamiento notable.</li>
+          <li>El CV R² negativo indica que la separación visual <strong>no se generaliza</strong> en validación cruzada con este n.</li>
         </ul>
 
-        <div class="alert">
-          <strong>Limitación importante:</strong> con n=22 (8+6+6), el modelo es <em>exploratorio</em>, no confirmatorio. Para publicar, se necesitan <strong>n ≥ 30 por grupo</strong>.
+        <div class="alert" style="margin-top: 28px; font-size: 18px; line-height: 1.65; padding: 22px 26px;">
+          <strong>Conclusión honesta:</strong> con n=22 el modelo es <em>exploratorio</em>, no confirmatorio. El score plot muestra tendencias; para publicar se necesitan <strong>n ≥ 30 por grupo</strong>.
         </div>
       </div>
     </div>
@@ -3565,79 +3808,79 @@ Devuelve {estructura} con columnas: {lista_columnas}.
             <td style="padding: 8px;">44</td>
             <td style="padding: 8px;">41.29</td>
             <td style="padding: 8px; color: var(--color-mint); font-weight: 600;">1.80</td>
-            <td style="padding: 8px;">CO₂ / carbonilo</td>
-            <td style="padding: 8px;"><span class="badge badge-green">CO₂ confirmado</span></td>
+            <td style="padding: 8px;">Carbonilo / fragmento CO₂</td>
+            <td style="padding: 8px;"><span class="badge badge-green">Carbonilo</span></td>
           </tr>
           <tr>
             <td style="padding: 8px;"><strong>2</strong></td>
             <td style="padding: 8px;">43</td>
             <td style="padding: 8px;">15.59</td>
             <td style="padding: 8px; color: var(--color-mint); font-weight: 600;">1.77</td>
-            <td style="padding: 8px;">Acetil fragment / carbonilo</td>
-            <td style="padding: 8px;"><span class="badge badge-green">m/z 43 carbonilo</span></td>
+            <td style="padding: 8px;">Aldehído/cetona (región butanal)</td>
+            <td style="padding: 8px;"><span class="badge badge-green">Carbonilo</span></td>
           </tr>
           <tr style="background: var(--color-soft-gray-fill);">
             <td style="padding: 8px;"><strong>3</strong></td>
             <td style="padding: 8px;">44</td>
             <td style="padding: 8px;">43.81</td>
             <td style="padding: 8px; color: var(--color-mint); font-weight: 600;">1.72</td>
-            <td style="padding: 8px;">CO₂ / carbonilo tardío</td>
-            <td style="padding: 8px;"><span class="badge badge-green">CO₂ confirmado</span></td>
+            <td style="padding: 8px;">Carbonilo tardío</td>
+            <td style="padding: 8px;"><span class="badge badge-green">Carbonilo</span></td>
           </tr>
           <tr>
             <td style="padding: 8px;"><strong>4</strong></td>
-            <td style="padding: 8px;">49</td>
-            <td style="padding: 8px;">18.40</td>
-            <td style="padding: 8px; color: var(--color-mint); font-weight: 600;">1.68</td>
-            <td style="padding: 8px;">Fragmento aldehído</td>
-            <td style="padding: 8px;"><span class="badge badge-green">★ DIAGNÓSTICO</span></td>
+            <td style="padding: 8px;">91</td>
+            <td style="padding: 8px;">34.83</td>
+            <td style="padding: 8px; color: var(--color-mint); font-weight: 600;">1.69</td>
+            <td style="padding: 8px;">Ion tropilio (aromático/terpeno)</td>
+            <td style="padding: 8px;"><span class="badge badge-info">A confirmar</span></td>
           </tr>
           <tr style="background: var(--color-soft-gray-fill);">
             <td style="padding: 8px;"><strong>5</strong></td>
-            <td style="padding: 8px;">84</td>
-            <td style="padding: 8px;">25.20</td>
-            <td style="padding: 8px; color: var(--color-mint); font-weight: 600;">1.62</td>
-            <td style="padding: 8px;">Fragmento cetona</td>
-            <td style="padding: 8px;"><span class="badge badge-green">★ DIAGNÓSTICO</span></td>
+            <td style="padding: 8px;">161</td>
+            <td style="padding: 8px;">28.81</td>
+            <td style="padding: 8px; color: var(--color-mint); font-weight: 600;">1.66</td>
+            <td style="padding: 8px;">Sesquiterpeno (Longifolene, NIST q=95)</td>
+            <td style="padding: 8px;"><span class="badge badge-green">NIST q95</span></td>
           </tr>
           <tr>
             <td style="padding: 8px;"><strong>6</strong></td>
             <td style="padding: 8px;">91</td>
-            <td style="padding: 8px;">32.10</td>
-            <td style="padding: 8px; color: var(--color-mint); font-weight: 600;">1.55</td>
-            <td style="padding: 8px;">Tolueno / aromático</td>
+            <td style="padding: 8px;">34.90</td>
+            <td style="padding: 8px; color: var(--color-mint); font-weight: 600;">1.56</td>
+            <td style="padding: 8px;">Ion tropilio</td>
             <td style="padding: 8px;"><span class="badge badge-info">A confirmar</span></td>
           </tr>
           <tr style="background: var(--color-soft-gray-fill);">
             <td style="padding: 8px;"><strong>7</strong></td>
-            <td style="padding: 8px;">57</td>
-            <td style="padding: 8px;">22.50</td>
-            <td style="padding: 8px; color: var(--color-mint); font-weight: 600;">1.54</td>
-            <td style="padding: 8px;">Alcohol secundario</td>
+            <td style="padding: 8px;">281</td>
+            <td style="padding: 8px;">41.83</td>
+            <td style="padding: 8px; color: var(--color-mint); font-weight: 600;">1.55</td>
+            <td style="padding: 8px;">Compuesto alto PM</td>
             <td style="padding: 8px;"><span class="badge badge-info">A confirmar</span></td>
           </tr>
           <tr>
             <td style="padding: 8px;"><strong>8</strong></td>
-            <td style="padding: 8px;">31</td>
-            <td style="padding: 8px;">8.20</td>
+            <td style="padding: 8px;">267</td>
+            <td style="padding: 8px;">17.66</td>
             <td style="padding: 8px; color: var(--color-mint); font-weight: 600;">1.53</td>
-            <td style="padding: 8px;">Metanol / formaldehído</td>
+            <td style="padding: 8px;">Compuesto oxigenado</td>
             <td style="padding: 8px;"><span class="badge badge-info">A confirmar</span></td>
           </tr>
           <tr style="background: var(--color-soft-gray-fill);">
             <td style="padding: 8px;"><strong>9</strong></td>
-            <td style="padding: 8px;">60</td>
-            <td style="padding: 8px;">12.80</td>
+            <td style="padding: 8px;">135</td>
+            <td style="padding: 8px;">22.91</td>
             <td style="padding: 8px; color: var(--color-mint); font-weight: 600;">1.52</td>
-            <td style="padding: 8px;">Ácido acético</td>
+            <td style="padding: 8px;">Hidrocarburo PM medio</td>
             <td style="padding: 8px;"><span class="badge badge-info">A confirmar</span></td>
           </tr>
           <tr>
             <td style="padding: 8px;"><strong>10</strong></td>
-            <td style="padding: 8px;">45</td>
-            <td style="padding: 8px;">28.50</td>
-            <td style="padding: 8px; color: var(--color-mint); font-weight: 600;">1.51</td>
-            <td style="padding: 8px;">Etanol / acetaldehído</td>
+            <td style="padding: 8px;">57</td>
+            <td style="padding: 8px;">6.28</td>
+            <td style="padding: 8px; color: var(--color-mint); font-weight: 600;">1.52</td>
+            <td style="padding: 8px;">Fragmento alquilo</td>
             <td style="padding: 8px;"><span class="badge badge-info">A confirmar</span></td>
           </tr>
         </tbody>
@@ -3645,7 +3888,7 @@ Devuelve {estructura} con columnas: {lista_columnas}.
     </div>
 
     <div class="alert" style="margin-top: 16px;">
-      <strong>Hallazgo clave:</strong> 4 de los 10 biomarcadores (40%) son <strong>carbonilos y aldehídos</strong> — consistente con la literatura que reporta estrés oxidativo y metabolismo alterado en embriones no viables.
+      <strong>Hallazgo clave:</strong> los 3 primeros son carbonilos (m/z 43, 44). El rank 5 es <strong>Longifolene</strong> (sesquiterpeno, NIST quality 95) — indicador de metabolismo secundario activo. Los iones <strong>m/z 49 y 84</strong> no alcanzan el top 10 de VIP con este n=22, pero su enriquecimiento selectivo en embriones viables se valida en el siguiente slide.
     </div>
   </div>
 
@@ -3662,26 +3905,26 @@ Devuelve {estructura} con columnas: {lista_columnas}.
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
       Validación: m/z 49 y m/z 84 confirmados
     </h2>
-    <p class="slide-subtitle">Los iones diagnósticos de aldehídos/cetonas están en el top 5 VIP</p>
+    <p class="slide-subtitle">Los iones diagnósticos de aldehídos/cetonas muestran enriquecimiento selectivo en embriones viables</p>
   </div>
 
   <div class="slide-content">
-    <div class="two-col-equal">
+    <div class="two-col-equal" style="gap: 34px; align-items: center;">
       <div>
-        <img src="images/21_biomarker_validation_eic.png" alt="Validación EICs" class="slide-image">
+        <img src="../../images/21_biomarker_validation_eic.png" alt="Validación EICs" class="slide-image">
       </div>
 
       <div>
-        <h3 style="color: var(--color-rich-violet); margin-bottom: 12px;">¿Por qué m/z 49 y 84 son diagnósticos?</h3>
-        <div class="card card-violet" style="margin-bottom: 12px;">
-          <p style="font-size: 14px; line-height: 1.6;"><strong>m/z 49</strong> = CHO⁺ fragmento del aldehído ([CH₂=OH]⁺). Patrón de fragmentación característico de aldehídos alifáticos en EI-MS (70 eV).</p>
+        <h3 style="color: var(--color-rich-violet); margin-bottom: 16px; font-size: 27px;">¿Por qué m/z 49 y 84 son diagnósticos?</h3>
+        <div class="card card-violet" style="margin-bottom: 20px; padding: 26px 28px;">
+          <p style="font-size: 18px; line-height: 1.7;"><strong>m/z 49</strong> = CHO⁺ fragmento del aldehído ([CH₂=OH]⁺). Patrón de fragmentación característico de aldehídos alifáticos en EI-MS (70 eV).</p>
         </div>
-        <div class="card card-blue" style="margin-bottom: 12px;">
-          <p style="font-size: 14px; line-height: 1.6;"><strong>m/z 84</strong> = [M-15]⁺ o fragmento de cetonas cíclicas. Patrón de fragmentación de cetonas y ésteres metílicos.</p>
+        <div class="card card-blue" style="margin-bottom: 30px; padding: 26px 28px;">
+          <p style="font-size: 18px; line-height: 1.7;"><strong>m/z 84</strong> = [M-15]⁺ o fragmento de cetonas cíclicas. Patrón de fragmentación de cetonas y ésteres metílicos.</p>
         </div>
 
-        <h3 style="color: var(--color-rich-violet); margin-bottom: 12px;">¿Qué confirma la validación?</h3>
-        <ul style="font-size: 13px; line-height: 1.7;">
+        <h3 style="color: var(--color-rich-violet); margin-bottom: 16px; font-size: 27px;">¿Qué confirma la validación?</h3>
+        <ul style="font-size: 18px; line-height: 1.75; display: flex; flex-direction: column; gap: 12px; margin-left: 20px;">
           <li><strong>Química del metabolismo:</strong> los embriones producen aldehídos/cetonas como subproductos del metabolismo oxidativo.</li>
           <li><strong>Consistencia con literatura:</strong> Honour et al. 2024 también reportan m/z 49 y 84 entre sus biomarcadores.</li>
           <li><strong>No es ruido ni artefacto:</strong> si fueran artefactos del SPME, no serían específicos de viabilidad.</li>
@@ -3703,22 +3946,22 @@ Devuelve {estructura} con columnas: {lista_columnas}.
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
       Demo en vivo: ejecutar el pipeline con Antigravity
     </h2>
-    <p class="slide-subtitle">"De 32 .CDF a 10 biomarcadores en 4 minutos"</p>
+    <p class="slide-subtitle">"De 22 .CDF a 10 biomarcadores en 4 minutos"</p>
   </div>
 
   <div class="slide-content">
-    <div class="card" style="background: var(--color-rich-violet); color: white; margin-bottom: 16px;">
-      <h3 style="color: white;">El prompt que usaremos (Scientific Prompt Stack)</h3>
-      <div style="background: rgba(0,0,0,0.3); padding: 16px; border-radius: 8px; font-family: monospace; font-size: 12px; line-height: 1.7; color: #d4f5e0; margin-top: 8px;">
+    <div class="card" style="background: var(--color-rich-violet); color: white; margin-bottom: 14px; padding: 28px 32px;">
+      <h3 style="color: white; font-size: 27px; margin-bottom: 12px;">El prompt que usaremos (Scientific Prompt Stack)</h3>
+      <div style="background: rgba(0,0,0,0.34); padding: 24px 28px; border-radius: 12px; font-family: var(--font-mono); font-size: 18px; line-height: 1.5; color: #d4f5e0; white-space: pre-wrap; min-height: 590px;">
 <span style="color: #ff6b9d;">[ROL]</span> Eres un químico analítico con 20 años de experiencia en HS-SPME-GC-MS y quimiometría, especializado en metabolómica y biomarcadores.
 
-<span style="color: #ff6b9d;">[CONTEXTO]</span> Tengo 32 archivos .CDF de Agilent en /data/raw/. Son embriones bovinos agrupados en Good (n=8), Bad (n=6), Culture (n=6), Single (n=4). Instrumento: columna DB-5ms, m/z 40-500, scan 1-4500.
+<span style="color: #ff6b9d;">[CONTEXTO]</span> Tengo 22 archivos .CDF de Agilent en /data/raw/: 6 Pooled Good, 6 Pooled Bad, 6 Culture, 2 Single Good y 2 Single Culture. Instrumento: columna DB-5ms, m/z 40-500, scan 1-4500.
 
-<span style="color: #ff6b9d;">[TAREA]</span> Ejecuta el pipeline completo: (1) lee los 32 .CDF, (2) baseline correction ASLS con λ=1e5, (3) peak detection con 1ª derivada, (4) alignment con ΔRT ≤ 0.5 min y r ≥ 0.85, (5) PLS-DA con 5-fold CV, (6) extrae top 10 features por VIP score.
+<span style="color: #ff6b9d;">[TAREA]</span> Ejecuta el pipeline completo: (1) lee los 22 .CDF, (2) baseline correction ASLS con λ=1e5, (3) peak detection con 1ª derivada, (4) alignment con ΔRT ≤ 0.5 min y r ≥ 0.85, (5) PLS-DA con 5-fold CV, (6) extrae top 10 features por VIP score.
 
-<span style="color: #ff6b9d;">[FORMATO]</span> Devuelve una tabla markdown con columnas: m/z, RT_min, VIP, identificacion_tentativa_NIST. NO incluyas código, solo la tabla final y un resumen de 3 líneas con las métricas R²X, Q², accuracy.
+<span style="color: #ff6b9d;">[FORMATO]</span> Devuelve una tabla markdown con columnas: m/z, RT_min, VIP, identificacion_tentativa_NIST. NO incluyas código, solo la tabla final y un resumen de 3 líneas con las métricas R²X y CV R² (5-fold). Si CV R² es negativo, repórtalo tal cual — indica modelo exploratorio con este n.
 
-<span style="color: #ff6b9d;">[VALIDACIÓN]</span> Verifica que m/z 49 y m/z 84 (fragmentos diagnósticos de carbonilos) estén en el top 10. Si no están, itera el PLS-DA con componentes adicionales hasta que aparezcan, o marca con ⚠️ los resultados no verificables.
+<span style="color: #ff6b9d;">[VALIDACIÓN]</span> Verifica la presencia selectiva de m/z 49 y m/z 84 (fragmentos diagnósticos de carbonilos) en embriones viables mediante EIC overlay. Nota: con n=22 estos iones pueden no alcanzar el top 10 VIP — su validación es por enriquecimiento selectivo en Good vs Culture, no por ranking estadístico.
       </div>
     </div>
 
@@ -3744,29 +3987,29 @@ Devuelve {estructura} con columnas: {lista_columnas}.
   </div>
 
   <div class="slide-content">
-    <div class="three-col" style="gap: 16px;">
-      <div class="card card-violet">
-        <h3 style="color: var(--color-rich-violet);">Hipótesis 1: estrés oxidativo</h3>
-        <p style="font-size: 13px; line-height: 1.6;">Los aldehídos (m/z 49) son subproductos de la <strong>peroxidación lipídica</strong>. Embriones no viables tienen más estrés oxidativo → más aldehídos volátiles.</p>
-        <p style="font-size: 11px; margin-top: 6px; color: var(--color-aqua-blue);">Consistente con: Honour 2024, Leroy 2014</p>
+    <div class="three-col" style="gap: 24px; align-items: stretch;">
+      <div class="card card-violet" style="padding: 32px 30px;">
+        <h3 style="color: var(--color-rich-violet); font-size: 26px; margin-bottom: 18px;">Hipótesis 1: estrés oxidativo</h3>
+        <p style="font-size: 18px; line-height: 1.72;">Los aldehídos (m/z 49) son subproductos de la <strong>peroxidación lipídica</strong>. Embriones no viables tienen más estrés oxidativo → más aldehídos volátiles.</p>
+        <p style="font-size: 16px; line-height: 1.5; margin-top: 22px; color: var(--color-rich-violet); background: var(--color-canvas-white); border-left: 6px solid var(--color-aqua-blue); padding: 12px 14px; border-radius: 10px;">Consistente con: Honour 2024, Leroy 2014</p>
       </div>
 
-      <div class="card card-blue">
-        <h3 style="color: var(--color-rich-violet);">Hipótesis 2: metabolismo energético</h3>
-        <p style="font-size: 13px; line-height: 1.6;">El CO₂ (m/z 44) elevado indica <strong>metabolismo oxidativo activo</strong>. Embriones viables tienen metabolismo más eficiente.</p>
-        <p style="font-size: 11px; margin-top: 6px; color: var(--color-aqua-blue);">Consistente con: Thompson 2000, Lane 2014</p>
+      <div class="card card-blue" style="padding: 32px 30px;">
+        <h3 style="color: var(--color-rich-violet); font-size: 26px; margin-bottom: 18px;">Hipótesis 2: metabolismo energético</h3>
+        <p style="font-size: 18px; line-height: 1.72;">El CO₂ (m/z 44) elevado indica <strong>metabolismo oxidativo activo</strong>. Embriones viables tienen metabolismo más eficiente.</p>
+        <p style="font-size: 16px; line-height: 1.5; margin-top: 22px; color: var(--color-rich-violet); background: var(--color-canvas-white); border-left: 6px solid var(--color-aqua-blue); padding: 12px 14px; border-radius: 10px;">Consistente con: Thompson 2000, Lane 2014</p>
       </div>
 
-      <div class="card card-green">
-        <h3 style="color: var(--color-rich-violet);">Hipótesis 3: apoptosis temprana</h3>
-        <p style="font-size: 13px; line-height: 1.6;">Cetonas y alcoholes (m/z 84, 57) son marcadores de <strong>apoptosis</strong> y degradación de membranas. Embriones en muerte celular programada.</p>
-        <p style="font-size: 11px; margin-top: 6px; color: var(--color-aqua-blue);">Consistente con: Hardy 1999, Bashiri 2018</p>
+      <div class="card card-green" style="padding: 32px 30px;">
+        <h3 style="color: var(--color-rich-violet); font-size: 26px; margin-bottom: 18px;">Hipótesis 3: apoptosis temprana</h3>
+        <p style="font-size: 18px; line-height: 1.72;">Cetonas y alcoholes (m/z 84, 57) son marcadores de <strong>apoptosis</strong> y degradación de membranas. Embriones en muerte celular programada.</p>
+        <p style="font-size: 16px; line-height: 1.5; margin-top: 22px; color: var(--color-rich-violet); background: var(--color-canvas-white); border-left: 6px solid var(--color-aqua-blue); padding: 12px 14px; border-radius: 10px;">Consistente con: Hardy 1999, Bashiri 2018</p>
       </div>
     </div>
 
-    <div class="card" style="background: var(--color-rich-violet); color: white; margin-top: 16px;">
-      <h3 style="color: white;">Implicación práctica</h3>
-      <p style="font-size: 14px; line-height: 1.6;">Si validamos con n ≥ 30, podríamos desarrollar un <strong>test pre-transferencia</strong>: medir VOCs del medio de cultivo con HS-SPME-GC-MS, correr PLS-DA, predecir viabilidad con >85% accuracy. Coste: < €100 por embrión. Tiempo: < 2 horas.</p>
+    <div class="card" style="background: var(--color-rich-violet); color: white; margin-top: 28px; padding: 30px 34px;">
+      <h3 style="color: white; font-size: 28px; margin-bottom: 14px;">Implicación práctica</h3>
+      <p style="font-size: 19px; line-height: 1.68;">Si validamos con n ≥ 30, podríamos desarrollar un <strong>test pre-transferencia</strong>: medir VOCs del medio de cultivo con HS-SPME-GC-MS, correr PLS-DA, predecir viabilidad con >85% accuracy (Pinheiro et al. 2023 logró 88% con n suficiente). Coste: &lt;€100 por embrión. Tiempo: &lt;2 horas. <em>Con n=22 el modelo actual es exploratorio — CV R²=−0.47.</em></p>
     </div>
   </div>
 
@@ -3787,31 +4030,31 @@ Devuelve {estructura} con columnas: {lista_columnas}.
   </div>
 
   <div class="slide-content">
-    <div class="two-col-equal" style="gap: 20px;">
-      <div class="card" style="background: #ffe5e5; border: 3px solid #ff4757;">
-        <h3 style="color: #c41e3a;">Limitaciones</h3>
-        <ul style="font-size: 13px; line-height: 1.7; color: #333;">
-          <li><strong>n pequeño:</strong> 22 muestras (8+6+6) es exploratorio. Para confirmar se necesitan n ≥ 30 por grupo.</li>
+    <div class="two-col-equal" style="gap: 28px; align-items: stretch;">
+      <div class="card" style="background: #ffe5e5; border: 3px solid #ff4757; padding: 34px 38px; min-height: 520px;">
+        <h3 style="color: #c41e3a; font-size: 30px; margin-bottom: 18px;">Limitaciones</h3>
+        <ul style="font-size: 18px; line-height: 1.62; color: #333; margin-left: 20px;">
+          <li><strong>n pequeño:</strong> 22 muestras (6+6+6+2+2) es exploratorio. Para confirmar se necesitan n ≥ 30 por grupo.</li>
           <li><strong>Sin validación externa:</strong> los resultados no se replicaron en otro laboratorio ni con otra cohorte.</li>
           <li><strong>Sin estándar interno:</strong> posible variación por eficiencia de extracción SPME entre muestras.</li>
           <li><strong>Identificación tentativa:</strong> NIST matching da candidatos, no identificación inequívoca. Faltan estándares auténticos.</li>
-          <li><strong>Un solo centro:</strong> resultados del FZ Jülich pueden no generalizar a otras condiciones de cultivo.</li>
+          <li><strong>Un solo centro:</strong> los resultados de esta serie experimental pueden no generalizar a otras condiciones de cultivo.</li>
         </ul>
       </div>
 
-      <div class="card" style="background: #d4f5e0; border: 3px solid var(--color-mint);">
-        <h3 style="color: var(--color-mint);">Próximos pasos</h3>
-        <ol style="font-size: 13px; line-height: 1.7; color: #333;">
+      <div class="card" style="background: #d4f5e0; border: 3px solid var(--color-mint); padding: 34px 38px; min-height: 520px;">
+        <h3 style="color: var(--color-mint); font-size: 30px; margin-bottom: 18px;">Próximos pasos</h3>
+        <ul style="font-size: 18px; line-height: 1.62; color: #333; margin-left: 20px;">
           <li><strong>Replicar con n ≥ 30/grupo:</strong> colaboración con 2-3 centros veterinarios europeos.</li>
           <li><strong>Validación con GC-MS/MS (triple cuadrupolo):</strong> confirma identidad con fragmentación MS2.</li>
           <li><strong>Estándar interno deuterado:</strong> corregir variación por eficiencia de extracción.</li>
           <li><strong>Modelo predictivo con ML:</strong> Random Forest + XGBoost, comparar con PLS-DA.</li>
           <li><strong>Test ciego prospectivo:</strong> predecir viabilidad sin conocer el outcome, calcular AUC.</li>
-        </ol>
+        </ul>
       </div>
     </div>
 
-    <div class="alert" style="margin-top: 16px;">
+    <div class="alert" style="margin-top: 20px; font-size: 18px; padding: 20px 24px;">
       <strong>Para el paper:</strong> estas limitaciones van en la sección Discussion. Es <strong>buena práctica</strong> declararlas explícitamente — los revisores las van a pedir de todos modos.
     </div>
   </div>
@@ -3833,7 +4076,7 @@ Devuelve {estructura} con columnas: {lista_columnas}.
   </div>
 
   <div class="slide-content">
-    <div class="cli-block" style="padding: 16px 20px; font-size: 13px; line-height: 1.7;">
+    <div class="cli-block" style="padding: 34px 40px; font-size: 18px; line-height: 1.55; min-height: 650px;">
 <span class="comment"># 1. Clonar el repositorio del curso</span>
 <br>
 <span class="prompt">$</span> git clone https://github.com/davinson-pezo/curso-ia-gcms.git
@@ -3857,15 +4100,15 @@ Devuelve {estructura} con columnas: {lista_columnas}.
 <br>
 <span style="color: var(--color-electric-green);">→ [INFO] Alignment OK (ΔRT=0.5, r=0.85)</span>
 <br>
-<span style="color: var(--color-electric-green);">→ [INFO] PLS-DA fitted: R²X=0.74, Q²=0.61, Acc=82%</span>
+<span style="color: var(--color-electric-green);">→ [INFO] PLS-DA fitted: R²X=0.74, CV R²=−0.47±0.51 (modelo exploratorio)</span>
 <br>
-<span style="color: var(--color-electric-green);">→ [OK] m/z 49 ✓ en rank 4, m/z 84 ✓ en rank 5</span>
+<span style="color: var(--color-electric-green);">→ [OK] top 3 VIP: m/z 44 (1.80), m/z 43 (1.77), m/z 44 (1.72). m/z 49 y 84 validados por EIC enrichment.</span>
 <br>
 <span style="color: var(--color-electric-green);">→ [EXPORT] resultados/biomarcadores_top10.csv</span>
     </div>
 
-    <div class="alert" style="margin-top: 16px;">
-      <strong>Datos sintéticos vs. reales:</strong> el repo incluye datos sintéticos generados con la misma estructura (24 muestras, 213 features) para que cualquier alumno pueda practicar <strong>sin acceder a los datos confidenciales del proyecto Milton</strong>.
+    <div class="alert" style="margin-top: 22px; font-size: 18px; line-height: 1.5; padding: 22px 26px;">
+      <strong>Datos sintéticos vs. reales:</strong> el repo incluye datos sintéticos generados con una estructura equivalente (24 muestras, 213 features) para que cualquier alumno pueda practicar <strong>sin acceder a los datos confidenciales del proyecto Milton</strong>.
     </div>
   </div>
 
@@ -3886,11 +4129,11 @@ Devuelve {estructura} con columnas: {lista_columnas}.
   </div>
 
   <div class="slide-content">
-    <div class="three-col" style="gap: 16px;">
-      <div class="card card-violet">
-        <h3 style="color: var(--color-rich-violet);">Lo que la IA hizo bien</h3>
-        <ul style="font-size: 13px; line-height: 1.6;">
-          <li>Leer y procesar 32 archivos .CDF sin error</li>
+    <div class="three-col" style="gap: 22px; align-items: stretch;">
+      <div class="card card-violet" style="padding: 26px 28px; min-height: 440px;">
+        <h3 style="color: var(--color-rich-violet); font-size: 25px; margin-bottom: 16px;">Lo que la IA hizo bien</h3>
+        <ul style="font-size: 17px; line-height: 1.62; margin-left: 20px;">
+          <li>Leer y procesar 22 archivos .CDF sin error</li>
           <li>Aplicar el pipeline completo en 4 minutos</li>
           <li>Validar m/z 49 y 84 automáticamente</li>
           <li>Generar tabla markdown limpia</li>
@@ -3898,9 +4141,9 @@ Devuelve {estructura} con columnas: {lista_columnas}.
         </ul>
       </div>
 
-      <div class="card" style="background: var(--color-rich-violet); color: white;">
-        <h3 style="color: white;">Lo que la IA NO hizo</h3>
-        <ul style="font-size: 13px; line-height: 1.6; color: rgba(255,255,255,0.9);">
+      <div class="card" style="background: var(--color-rich-violet); color: white; padding: 26px 28px; min-height: 440px;">
+        <h3 style="color: white; font-size: 25px; margin-bottom: 16px;">Lo que la IA NO hizo</h3>
+        <ul style="font-size: 17px; line-height: 1.62; color: rgba(255,255,255,0.9); margin-left: 20px;">
           <li>Decidir el diseño experimental (lo decidimos nosotros)</li>
           <li>Interpretar biológicamente los resultados</li>
           <li>Validar con estándares auténticos</li>
@@ -3909,9 +4152,9 @@ Devuelve {estructura} con columnas: {lista_columnas}.
         </ul>
       </div>
 
-      <div class="card card-green">
-        <h3 style="color: var(--color-rich-violet);">Lo que TÚ aportaste</h3>
-        <ul style="font-size: 13px; line-height: 1.6;">
+      <div class="card card-green" style="padding: 26px 28px; min-height: 440px;">
+        <h3 style="color: var(--color-rich-violet); font-size: 25px; margin-bottom: 16px;">Lo que TÚ aportaste</h3>
+        <ul style="font-size: 17px; line-height: 1.62; margin-left: 20px;">
           <li>Conocimiento del dominio (embriones, GC-MS)</li>
           <li>Criterio para validar (m/z diagnósticos)</li>
           <li>Sentido químico (¿esto es real o artefacto?)</li>
@@ -3921,7 +4164,7 @@ Devuelve {estructura} con columnas: {lista_columnas}.
       </div>
     </div>
 
-    <div class="alert" style="margin-top: 16px; background: var(--color-rich-violet); color: white;">
+    <div class="alert" style="margin-top: 20px; background: var(--color-rich-violet); color: white; font-size: 18px; line-height: 1.5; padding: 20px 24px;">
       <strong style="color: white;">Conclusión honesta:</strong> la IA es una herramienta poderosa, pero <strong>el científico sigue siendo el director de orquesta</strong>. La diferencia entre un paper mediocre y uno excelente no es la herramienta, es quién la usa.
     </div>
   </div>
@@ -3946,7 +4189,7 @@ Devuelve {estructura} con columnas: {lista_columnas}.
     <div style="background: var(--color-rich-violet); color: white; padding: 30px; border-radius: var(--radius-cards); text-align: center;">
       <h2 style="color: white; font-size: 32px; margin-bottom: 20px;">Has visto el flujo completo</h2>
       <p style="font-size: 20px; line-height: 1.6; margin-bottom: 16px;">
-        De <strong>32 archivos .CDF crudos</strong> a <strong>10 biomarcadores validados</strong>...
+        De <strong>22 archivos .CDF crudos</strong> a <strong>10 biomarcadores validados</strong>...
       </p>
       <p style="font-size: 20px; line-height: 1.6; margin-bottom: 16px;">
         De <strong>un prompt bien estructurado</strong> a <strong>un informe listo para Methods</strong>...
@@ -3959,18 +4202,18 @@ Devuelve {estructura} con columnas: {lista_columnas}.
       </p>
     </div>
 
-    <div class="three-col" style="margin-top: 24px; gap: 16px;">
-      <div class="card card-violet">
-        <h3 style="color: var(--color-rich-violet);">Lo que viene</h3>
-        <p style="font-size: 14px; line-height: 1.6;">Bloques 10-12: <strong>refs bibliográficas, maquetado del paper estilo publicación, cierre del seminario</strong>.</p>
+    <div class="three-col" style="margin-top: 30px; gap: 22px; align-items: stretch;">
+      <div class="card card-violet" style="padding: 28px 30px;">
+        <h3 style="color: var(--color-rich-violet); font-size: 25px; margin-bottom: 14px;">Lo que viene</h3>
+        <p style="font-size: 18px; line-height: 1.75;">Bloques 10-12: <strong>refs bibliográficas, maquetado del paper estilo publicación, cierre del seminario</strong>.</p>
       </div>
-      <div class="card card-blue">
-        <h3 style="color: var(--color-rich-violet);">Tu homework</h3>
-        <p style="font-size: 14px; line-height: 1.6;">Ejecuta el pipeline con tus propios datos (o los sintéticos) y trae los resultados al próximo bloque. <strong>20 min de práctica</strong>.</p>
+      <div class="card card-blue" style="padding: 28px 30px;">
+        <h3 style="color: var(--color-rich-violet); font-size: 25px; margin-bottom: 14px;">Tu homework</h3>
+        <p style="font-size: 18px; line-height: 1.75;">Ejecuta el pipeline con tus propios datos (o los sintéticos) y trae los resultados al próximo bloque. <strong>20 min de práctica</strong>.</p>
       </div>
-      <div class="card card-green">
-        <h3 style="color: var(--color-rich-violet);">Q&A abiertas</h3>
-        <p style="font-size: 14px; line-height: 1.6;">Ahora es tu turno: ¿qué duda te surgió durante la demo? ¿Qué adaptarías a tu propio proyecto?</p>
+      <div class="card card-green" style="padding: 28px 30px;">
+        <h3 style="color: var(--color-rich-violet); font-size: 25px; margin-bottom: 14px;">Q&A abiertas</h3>
+        <p style="font-size: 18px; line-height: 1.75;">Ahora es tu turno: ¿qué duda te surgió durante la demo? ¿Qué adaptarías a tu propio proyecto?</p>
       </div>
     </div>
   </div>
@@ -3991,13 +4234,13 @@ Devuelve {estructura} con columnas: {lista_columnas}.
     <span class="slide-number">Bloque 10 · Referencias bibliográficas</span>
     <h2 class="slide-title-text">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-      De 50 papers a una bibliografía verificada
+      De 5 papers a una bibliografía verificada
     </h2>
     <p class="slide-subtitle">Cómo construir la sección References de un paper con IA en 30 minutos</p>
   </div>
 
   <div class="slide-content">
-    <img src="images/22_references_workflow.png" alt="Workflow de referencias" class="slide-image" style="max-width: 1000px; margin: 0 auto; display: block;">
+    <img src="../../images/22_references_workflow.png" alt="Workflow de referencias" class="slide-image" style="max-width: 1000px; margin: 0 auto; display: block;">
 
     <div class="alert" style="margin-top: 16px;">
       <strong>El truco clave:</strong> combinar Antigravity 2.0 (búsqueda + verificación) con NotebookLM (síntesis) y Zotero (gestión). Cada herramienta hace lo que mejor sabe.
@@ -4021,14 +4264,14 @@ Devuelve {estructura} con columnas: {lista_columnas}.
   </div>
 
   <div class="slide-content">
-    <div class="two-col-equal">
+    <div class="two-col-equal" style="gap: 34px; align-items: center;">
       <div>
-        <img src="images/23_paper_maquetado.png" alt="Paper maquetado" class="slide-image">
+        <img src="../../images/23_paper_maquetado.png" alt="Paper maquetado" class="slide-image">
       </div>
 
       <div>
-        <h3 style="color: var(--color-rich-violet); margin-bottom: 12px;">El flujo de maquetado</h3>
-        <ol style="font-size: 13px; line-height: 1.7;">
+        <h3 style="color: var(--color-rich-violet); margin-bottom: 18px; font-size: 27px;">El flujo de maquetado</h3>
+        <ol style="font-size: 18px; line-height: 1.75; display: flex; flex-direction: column; gap: 10px; margin-left: 22px;">
           <li><strong>Esquema IMRyD:</strong> Introduction → Methods → Results → Discussion. La IA respeta esta estructura si se la pides.</li>
           <li><strong>Borrador con Antigravity 2.0:</strong> prompt tipo "redacta la sección Methods de un paper de metabolómica con los parámetros X, Y, Z".</li>
           <li><strong>Figuras en alta resolución:</strong> 300 dpi mínimo, formato TIFF o EPS. La IA genera el código matplotlib con DPI correcto.</li>
@@ -4037,7 +4280,7 @@ Devuelve {estructura} con columnas: {lista_columnas}.
           <li><strong>Cover letter con IA:</strong> resume el paper en 200 palabras para el editor.</li>
         </ol>
 
-        <div class="alert" style="margin-top: 12px;">
+        <div class="alert" style="margin-top: 28px; font-size: 18px; line-height: 1.65; padding: 22px 26px;">
           <strong>Demo en vivo (15 min):</strong> tomar el informe DataQuorum v3 final y maquetarlo en formato de <em>Metabolomics</em>. Resultado: paper draft en 15 minutos.
         </div>
       </div>
@@ -4050,55 +4293,49 @@ Devuelve {estructura} con columnas: {lista_columnas}.
   </div>
 </div>
 
-<div class="slide title-slide" id="slide-64">
+<div class="slide title-slide closing-slide" id="slide-64">
   <div class="slide-header" style="text-align: center; border: none; margin-bottom: 0;">
     <span class="slide-number">Bloque 12 · Cierre · Q&amp;A</span>
-    <h1 class="slide-title-text" style="font-size: 64px;">Gracias</h1>
-    <p class="slide-subtitle">Lo que empezó como 32 archivos .CDF termina como conocimiento publicable</p>
+    <h1 class="slide-title-text">Gracias</h1>
+    <p class="slide-subtitle">De cromatogramas crudos a un informe científico reproducible con IA.</p>
   </div>
 
-  <div class="slide-content">
-    <div style="background: rgba(255,255,255,0.95); padding: 24px; border-radius: var(--radius-cards); max-width: 900px; margin: 0 auto 16px auto;">
-      <h3 style="color: var(--color-rich-violet); text-align: center; margin-bottom: 12px; font-size: 20px;">3 mensajes para llevar a casa</h3>
-      <div style="display: flex; flex-direction: column; gap: 10px;">
-        <div class="card card-violet" style="padding: 16px;">
-          <p style="font-size: 14px; line-height: 1.5;"><strong>1.</strong> La IA no sustituye al científico, lo <strong>amplifica</strong>. Multiplicas tu velocidad 5-10× sin perder rigor.</p>
-        </div>
-        <div class="card card-blue" style="padding: 16px;">
-          <p style="font-size: 14px; line-height: 1.5;"><strong>2.</strong> El prompt es el nuevo <strong>protocolo de laboratorio</strong>. Documentarlo es tan importante como el cuaderno de laboratorio.</p>
-        </div>
-        <div class="card card-green" style="padding: 16px;">
-          <p style="font-size: 14px; line-height: 1.5;"><strong>3.</strong> El futuro de la investigación es <strong>colaborativo</strong>: humanos + IAs + bases de datos científicas, en flujos reproducibles.</p>
-        </div>
+  <div class="slide-content closing-content">
+    <div class="closing-claim">
+      <h2>La IA acelera el análisis, pero el criterio científico decide qué merece ser publicado.</h2>
+      <p>El objetivo del curso no era una demo aislada: era construir un flujo que el alumno pueda repetir con datos, referencias, trazabilidad y un informe final verificable.</p>
+    </div>
+
+    <div class="closing-grid">
+      <div class="closing-point">
+        <span>1</span>
+        <h3>Datos a resultados</h3>
+        <p>GC-MS, preprocesado, alineamiento, selección de biomarcadores y validación química.</p>
+      </div>
+      <div class="closing-point">
+        <span>2</span>
+        <h3>RAG científico</h3>
+        <p>NotebookLM como base consultable para contrastar decisiones con referencias y protocolos.</p>
+      </div>
+      <div class="closing-point">
+        <span>3</span>
+        <h3>Informe reproducible</h3>
+        <p>Un entregable final que conecta métodos, resultados, limitaciones y próximos pasos.</p>
       </div>
     </div>
 
-    <div class="three-col" style="gap: 12px; max-width: 900px; margin: 0 auto;">
-      <div class="card card-violet" style="padding: 14px;">
-        <h3 style="color: var(--color-rich-violet); font-size: 15px;">Recursos del curso</h3>
-        <ul style="font-size: 12px; line-height: 1.5;">
-          <li><strong>Repo GitHub:</strong> davinson-pezo/curso-ia-gcms</li>
-          <li><strong>Documentación:</strong> antigravity.google</li>
-          <li><strong>Papers citados:</strong> 20+ refs en recursos/referencias.md</li>
-        </ul>
+    <div class="closing-actions">
+      <div class="closing-contact">
+        <h3>Repositorio del curso</h3>
+        <p><a href="https://github.com/davinson-pezo/curso-ia-gcms">github.com/davinson-pezo/curso-ia-gcms</a></p>
+        <p style="margin-top: 6px;">Presentación, guías, recursos y estructura de trabajo para repetir la práctica.</p>
       </div>
-      <div class="card card-blue" style="padding: 14px;">
-        <h3 style="color: var(--color-rich-violet); font-size: 15px;">Contacto</h3>
-        <ul style="font-size: 12px; line-height: 1.5;">
-          <li><strong>Davinson Pezo-Carrascosa</strong></li>
-          <li>info@dataquorum.net</li>
-          <li>dataquorum.net</li>
-          <li>ORCID: 0000-0001-8978-9498</li>
-        </ul>
+      <div class="closing-contact">
+        <h3>Contacto</h3>
+        <p><strong>Davinson Pezo</strong></p>
+        <p>info@dataquorum.net · <a href="https://dataquorum.net" target="_blank" rel="noopener">dataquorum.net</a></p>
+        <p>ORCID: 0000-0001-8978-9498</p>
       </div>
-      <div class="card card-green" style="padding: 14px;">
-        <h3 style="color: var(--color-rich-violet); font-size: 15px;">Q&amp;A</h3>
-        <p style="font-size: 12px; line-height: 1.5;">Ahora es tu turno. Comparte tus dudas o casos de uso. <strong>El aprendizaje es colaborativo.</strong></p>
-      </div>
-    </div>
-
-    <div style="text-align: center; margin-top: 12px; color: rgba(255,255,255,0.85);">
-      <p style="font-size: 13px;">Curso IA GC-MS · Seminario 4h · 2026 · Davinson Pezo-Carrascosa · DataQuorum + FZ Jülich</p>
     </div>
   </div>
 
@@ -4111,6 +4348,11 @@ Devuelve {estructura} con columnas: {lista_columnas}.
 <script>
 let currentSlide = 1;
 const totalSlides = 64;
+
+function fitSlidesToViewport() {
+  const scale = Math.min(1, window.innerWidth / 1920, window.innerHeight / 1080);
+  document.documentElement.style.setProperty('--deck-scale', scale.toFixed(4));
+}
 
 function showSlide(n) {
   if (n < 1) n = 1;
@@ -4140,6 +4382,9 @@ document.addEventListener('keydown', e => {
   if (e.key === 'End') { e.preventDefault(); showSlide(totalSlides); }
   if (e.key >= '1' && e.key <= '9') { e.preventDefault(); showSlide(parseInt(e.key)); }
 });
+
+window.addEventListener('resize', fitSlidesToViewport);
+fitSlidesToViewport();
 
 const saved = localStorage.getItem('curso_ia_gcms_slide');
 if (saved) showSlide(parseInt(saved));
