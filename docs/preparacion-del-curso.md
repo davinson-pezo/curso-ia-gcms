@@ -7,7 +7,7 @@ Checklist para preparar una sesion presencial o remota.
 - Verificar que la presentacion abre en `output/presentations/index.html`.
 - Ejecutar `python scripts/generar_datos_sinteticos.py`.
 - Confirmar que existe `recursos/datos-sinteticos/gcms_features_sinteticas.csv`.
-- Tener abierto `markdown/notas_orador.md`.
+- Tener abierto `markdown/guia_presentacion.md`.
 - Tener una copia PDF de backup si se exporta la presentacion.
 - Probar acceso a NotebookLM, Antigravity y cualquier MCP que se vaya a mostrar.
 
@@ -23,4 +23,3 @@ Checklist para preparar una sesion presencial o remota.
 - Subir correcciones al repositorio.
 - Anadir preguntas frecuentes de alumnos a `docs/`.
 - Marcar claramente cualquier dato real que no pueda compartirse.
-

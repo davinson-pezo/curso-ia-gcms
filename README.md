@@ -52,7 +52,7 @@ Sus imagenes estan versionadas en:
 | Codigo HTML de la presentacion | [output/presentations/index.html](output/presentations/index.html) |
 | Recursos externos obligatorios | [recursos.md](recursos.md) |
 | Guion para alumnos | [guion-alumnos/](guion-alumnos/) |
-| Notas del orador | [markdown/notas_orador.md](markdown/notas_orador.md) |
+| Guia de seguimiento | [markdown/guia_presentacion.md](markdown/guia_presentacion.md) |
 | Material promocional | [assets/promocion/](assets/promocion/) |
 | Prompts y plantillas | [recursos/](recursos/) |
 | Scripts reproducibles | [scripts/](scripts/) |
@@ -164,7 +164,7 @@ curso-ia-gcms/
 ├── informe_dataquorum_v3_final.md      Informe final de referencia
 ├── informe_dataquorum_v3_final_images/ Figuras necesarias para el informe
 ├── images/                            Imagenes didacticas de la presentacion
-├── markdown/                          Notas del orador
+├── markdown/                          Guia de seguimiento de la presentacion
 ├── docs/                              Documentacion de reconstruccion
 └── resultados/                        Salidas locales de alumnos
 ```

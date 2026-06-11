@@ -42,5 +42,5 @@ Estado: completado como base inicial.
 ## Cambios recientes
 
 - Presentacion auditada y alineada con `informe_dataquorum_v3_final.md`: parametros ASLS, metricas PLS-DA, tabla VIP top 10 y validacion de m/z 49/84 corregidos.
-- Notas del orador y guion de alumnos revisados y consistentes con el informe.
+- Guia de presentacion y guion de alumnos revisados y consistentes con el informe.
 - Dataset sintetico regenerado a 22 muestras (8 Good, 7 Bad, 7 Culture).
