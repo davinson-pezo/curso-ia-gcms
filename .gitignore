@@ -17,6 +17,7 @@ data/raw/
 resultados/*
 !resultados/README.md
 recursos/datos-sinteticos/*.csv
+!recursos/datos-sinteticos/gcms_features_sinteticas.csv
 
 # Artefactos temporales de notebooks y herramientas.
 .ipynb_checkpoints/

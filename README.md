@@ -49,7 +49,6 @@ Sus imagenes estan versionadas en:
 | Recurso | Ruta |
 | :--- | :--- |
 | Presentacion online | [davinson-pezo.github.io/curso-ia-gcms](https://davinson-pezo.github.io/curso-ia-gcms/) |
-| Codigo HTML de la presentacion | [output/presentations/index.html](output/presentations/index.html) |
 | Recursos externos obligatorios | [recursos.md](recursos.md) |
 | Guion para alumnos | [guion-alumnos/](guion-alumnos/) |
 | Guia de seguimiento | [markdown/guia_presentacion.md](markdown/guia_presentacion.md) |
@@ -96,13 +95,9 @@ Generar datos sinteticos para practicar sin datos reales:
 python scripts/generar_datos_sinteticos.py
 ```
 
-Abrir la presentacion localmente:
+La presentacion del curso se consulta desde la version online:
 
-```bash
-open output/presentations/index.html
-```
-
-En Windows o Linux, abre `output/presentations/index.html` directamente en el navegador.
+[davinson-pezo.github.io/curso-ia-gcms](https://davinson-pezo.github.io/curso-ia-gcms/)
 
 ---
 
