@@ -59,3 +59,6 @@ Comprueba que los grupos Good, Bad y Culture estan representados.
 
 Este ejercicio sirve para practicar estructura de analisis, no para concluir biologia real. En el curso, el caso de embriones se usa como narrativa cientifica; el repositorio publico debe proteger los datos confidenciales.
 
+## Siguiente paso
+
+Cuando se trabaja con cromatogramas reales, la tabla de features debe conectarse con identificaciones quimicas tentativas. Para esa parte usa la [guia de identificacion con NIST 17](guia_identificacion_nist17.md), donde se resume el flujo Python: CDF, apex, substraccion de fondo local, busqueda espectral y candidatos con Match Factor.

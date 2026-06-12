@@ -26,13 +26,25 @@ Uso en el curso:
 - NotebookLM se usara como RAG para consultas sobre las referencias.
 - El flujo esperado es consultar estas fuentes desde NotebookLM y conectar el razonamiento con Antigravity IDE durante el analisis.
 
+## 3. Biblioteca NIST 17 para identificacion
+
+Carpeta Drive:
+
+[Biblioteca NIST 17](https://drive.google.com/drive/folders/1bMQohs3BXzdffrAm0DDlJ7EgbBPfIhb5?usp=share_link)
+
+Uso en el curso:
+
+- Biblioteca de espectros de masa para proponer identidades quimicas en GC-MS.
+- Se usara despues de extraer y limpiar los espectros de los picos cromatograficos.
+- Los resultados se interpretan como candidatos de identificacion, no como confirmacion automatica.
+- No subir la biblioteca ni bases de datos derivadas al repositorio GitHub.
+
 ## Regla practica
 
-GitHub contiene guias, scripts y material docente. Google Drive contiene los archivos pesados o externos: cromatogramas y referencias bibliograficas.
+GitHub contiene guias, scripts y material docente. Google Drive contiene los archivos pesados o externos: cromatogramas, referencias bibliograficas y bibliotecas espectrales.
 
 Si descargas datos reales, mantenlos fuera de Git:
 
 ```text
 data/raw/
 ```
-

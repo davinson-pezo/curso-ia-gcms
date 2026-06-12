@@ -10,7 +10,8 @@ Estas guias acompanian la presentacion y estan pensadas para seguir el curso pas
 4. [Guia de configuracion de NotebookLM](guia_configuracion_notebooklm.md)
 5. [Paso 3 - NotebookLM para literatura](paso3_notebooklm.md)
 6. [Paso 4 - Pipeline GC-MS](paso4_pipeline.md)
-7. [Paso 5 - Informe reproducible](paso5_informe_reproducible.md)
+7. [Guia - Identificacion con NIST 17](guia_identificacion_nist17.md)
+8. [Paso 5 - Informe reproducible](paso5_informe_reproducible.md)
 
 El objetivo del bloque practico largo es llegar a un informe tecnico con una estructura similar a [../informe_dataquorum_v3_final.md](../informe_dataquorum_v3_final.md).
 
