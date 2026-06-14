@@ -9,7 +9,7 @@ Checklist para preparar una sesion presencial o remota.
 - Confirmar que existe `recursos/datos-sinteticos/gcms_features_sinteticas.csv`.
 - Tener abierto `markdown/guia_presentacion.md`.
 - Tener una copia PDF de backup si se exporta la presentacion.
-- Probar acceso a NotebookLM, Antigravity y cualquier MCP que se vaya a mostrar.
+- Probar acceso a NotebookLM en Chrome visible y comprobar que Antigravity puede consultar el cuaderno abierto.
 
 ## Durante la clase
 

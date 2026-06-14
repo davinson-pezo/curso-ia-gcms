@@ -98,15 +98,16 @@ Lo importante es entender:
 - como usarlo para contrastar decisiones metodologicas;
 - que limitaciones tiene aunque cite fuentes.
 
-### 8. Antigravity + NotebookLM
+### 8. Antigravity + NotebookLM en Chrome
 
 Veremos el flujo combinado:
 
 - NotebookLM como memoria bibliografica;
 - Antigravity como entorno de ejecucion;
+- Chrome como puente visible entre ambos;
 - el alumno como responsable de validar decisiones.
 
-La idea es no usar una sola herramienta para todo: cada herramienta cumple una funcion distinta.
+La idea es no depender de una skill externa de NotebookLM. Antigravity puede abrir Chrome, usar el cuaderno visible y traer la respuesta al flujo de trabajo, mientras el alumno controla login, permisos y validacion cientifica.
 
 ### 9. Caso practico GC-MS: embriones bovinos
 
@@ -170,7 +171,7 @@ Trabajaremos en torno a cinco acciones:
 
 - preparar el entorno;
 - escribir un prompt cientifico;
-- consultar referencias con NotebookLM;
+- consultar referencias con NotebookLM abierto en Chrome;
 - ejecutar o revisar el pipeline GC-MS;
 - comparar el resultado con el informe de ejemplo.
 
@@ -190,5 +191,5 @@ Deberias poder continuar con:
 - Que evidencia necesito para confiar en un biomarcador?
 - Como detecto si la IA esta inventando una conclusion?
 - Que informacion debe incluir un prompt cientifico auditable?
-- Cuando conviene usar NotebookLM y cuando Antigravity?
+- Cuando conviene usar NotebookLM, Chrome y Antigravity?
 - Que limitaciones debo declarar antes de convertir resultados en paper?

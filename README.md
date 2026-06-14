@@ -29,7 +29,7 @@ Durante el curso vamos a trabajar hacia un entregable concreto:
 | :--- | :--- |
 | Presentacion guiada | Contexto, teoria, demos y flujo pedagogico del curso. |
 | Dataset de trabajo | Cromatogramas GC-MS descargados desde Drive para la practica. |
-| RAG bibliografico | Referencias cargadas en NotebookLM para consultar literatura durante el analisis. |
+| RAG bibliografico | Referencias cargadas en NotebookLM y consultadas desde Chrome con Antigravity. |
 | Prompt cientifico | Instrucciones estructuradas para que un agente ejecute tareas auditables. |
 | Pipeline GC-MS | Lectura, preprocesado, peak detection, alignment, PLS-DA y ranking de biomarcadores. |
 | Identificacion espectral | Comparacion de espectros limpios contra NIST 17 para proponer identidades quimicas. |
@@ -67,7 +67,7 @@ Los archivos pesados no viven en GitHub. Antes de la practica, abre [recursos.md
 | Drive | Uso en clase |
 | :--- | :--- |
 | [Cromatogramas GC-MS](https://drive.google.com/drive/folders/1lRc_glpeQNt-PXHD4sLunmMkT75XJl2G?usp=share_link) | Datos cromatograficos con los que trabajaremos. |
-| [Referencias para NotebookLM](https://drive.google.com/drive/folders/1hHobZbc4fEVaL7YF3qN5BhDrxhqBE6wB?usp=share_link) | Papers que se cargaran en NotebookLM para usarlo como RAG. |
+| [Referencias para NotebookLM](https://drive.google.com/drive/folders/1hHobZbc4fEVaL7YF3qN5BhDrxhqBE6wB?usp=share_link) | Papers que se cargaran en NotebookLM para consultarlos desde Chrome con Antigravity. |
 | [Biblioteca NIST 17](https://drive.google.com/drive/folders/1bMQohs3BXzdffrAm0DDlJ7EgbBPfIhb5?usp=share_link) | Biblioteca de espectros para apoyar la identificacion de compuestos por GC-MS. |
 
 Regla simple: **GitHub contiene guias, codigo y material docente; Drive contiene cromatogramas, referencias externas y bibliotecas pesadas.**
@@ -112,8 +112,8 @@ La presentacion del curso se consulta desde la version online:
 | 1 | [Preparacion](guion-alumnos/paso1_preparacion.md) | Entorno y repo listos. |
 | 2 | [Instalacion de Antigravity](guion-alumnos/guia_instalacion_antigravity.md) | Antigravity 2.0, IDE, CLI y Science Skills activos. |
 | 3 | [Scientific Prompt Stack](guion-alumnos/paso2_prompt_stack.md) | Prompt cientifico auditable. |
-| 4 | [Configuracion de NotebookLM](guion-alumnos/guia_configuracion_notebooklm.md) | Cuaderno RAG conectado a las referencias del curso. |
-| 5 | [NotebookLM](guion-alumnos/paso3_notebooklm.md) | Consultas controladas sobre la base RAG. |
+| 4 | [Configuracion de NotebookLM](guion-alumnos/guia_configuracion_notebooklm.md) | Cuaderno RAG abierto en Chrome y listo para Antigravity. |
+| 5 | [NotebookLM](guion-alumnos/paso3_notebooklm.md) | Consultas controladas en Chrome, sin skill externa de NotebookLM. |
 | 6 | [Pipeline GC-MS](guion-alumnos/paso4_pipeline.md) | Analisis exploratorio y tabla de biomarcadores. |
 | 7 | [Identificacion NIST 17](guion-alumnos/guia_identificacion_nist17.md) | Candidatos quimicos por comparacion espectral en Python. |
 | 8 | [Informe reproducible](guion-alumnos/paso5_informe_reproducible.md) | Informe tecnico comparable al ejemplo DataQuorum. |
@@ -139,7 +139,7 @@ PLS-DA + VIP scores + validacion de trazas
 identificacion espectral con NIST 17
         |
         v
-NotebookLM como RAG de referencias
+NotebookLM en Chrome como RAG de referencias
         |
         v
 Antigravity IDE como agente de ejecucion

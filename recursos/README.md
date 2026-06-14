@@ -16,7 +16,7 @@ Aqui estan los cromatogramas con los que se trabajara durante el curso. Si los d
 
 [Referencias para NotebookLM](https://drive.google.com/drive/folders/1hHobZbc4fEVaL7YF3qN5BhDrxhqBE6wB?usp=share_link)
 
-Estas referencias se cargaran en NotebookLM. Durante el curso se usara NotebookLM como RAG para consultas sobre papers y documentos, conectado al flujo de trabajo con Antigravity IDE.
+Estas referencias se cargaran en NotebookLM. Durante el curso se usara NotebookLM como RAG para consultas sobre papers y documentos. El cuaderno se abrira en Chrome y Antigravity hara las preguntas sobre esa ventana visible, sin instalar una skill externa de NotebookLM.
 
 ## Subcarpetas
 

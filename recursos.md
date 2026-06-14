@@ -24,7 +24,8 @@ Uso en el curso:
 
 - Papers y documentos que se cargaran en NotebookLM.
 - NotebookLM se usara como RAG para consultas sobre las referencias.
-- El flujo esperado es consultar estas fuentes desde NotebookLM y conectar el razonamiento con Antigravity IDE durante el analisis.
+- El flujo esperado es abrir el cuaderno en Chrome, iniciar sesion manualmente y pedir a Antigravity que consulte ese cuaderno visible.
+- No se usara una skill externa de NotebookLM durante el curso.
 
 ## 3. Biblioteca NIST 17 para identificacion
 

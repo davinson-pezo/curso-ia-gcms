@@ -1,6 +1,6 @@
-# Paso 3 - NotebookLM para literatura
+# Paso 3 - NotebookLM para literatura con Chrome
 
-Objetivo: usar NotebookLM como lector controlado de papers, no como buscador general.
+Objetivo: usar NotebookLM como lector controlado de papers, no como buscador general, y consultarlo desde Antigravity usando una ventana visible de Chrome.
 
 Antes de empezar, configura el cuaderno del curso con la [guia de configuracion de NotebookLM](guia_configuracion_notebooklm.md).
 
@@ -8,9 +8,13 @@ Antes de empezar, configura el cuaderno del curso con la [guia de configuracion 
 
 1. Reune 3-5 papers relevantes.
 2. Sube los PDFs a NotebookLM.
-3. Haz preguntas concretas sobre metodo, muestra, instrumento y limitaciones.
-4. Extrae una tabla comparativa.
-5. Usa esa tabla para interpretar los resultados del pipeline GC-MS.
+3. Abre el cuaderno en Google Chrome e inicia sesion manualmente si hace falta.
+4. Pide a Antigravity que use Chrome para preguntar al cuaderno abierto.
+5. Haz preguntas concretas sobre metodo, muestra, instrumento y limitaciones.
+6. Extrae una tabla comparativa.
+7. Usa esa tabla para interpretar los resultados del pipeline GC-MS.
+
+No instalaremos ni usaremos una skill externa de NotebookLM. Si aparece login, 2FA o CAPTCHA, el alumno lo resuelve manualmente en Chrome.
 
 ## Preguntas utiles
 
@@ -30,3 +34,5 @@ Que afirmaciones puedo defender con estos papers y cuales serian especulativas?
 ## Regla de uso
 
 NotebookLM solo debe responder con base en las fuentes que has subido. Si falta una fuente, no conviertas la respuesta en conclusion final.
+
+Antigravity puede ayudarte a navegar, formular preguntas y traer la respuesta al IDE, pero no debe manejar credenciales ni afirmar conclusiones que NotebookLM no haya respaldado con fuentes.
